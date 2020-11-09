@@ -1,8 +1,10 @@
-import flask
-app = flask.Flask("__main__")
+from flask import Flask , render_template
 
-@app.route("/")
-def my_index():
-    return flask.render_template("index.html",token="hello flask+react")
+app = Flask(__name__)
 
-app.run(debug=True)
+@app.route('/')
+def index():
+    return render_template('')
+
+if __name__ == '__main__':
+    app.run(debug=True)
