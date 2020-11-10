@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
+import Axios from 'axios'
 // npm i @material-ui/core --save 필요시
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -61,6 +62,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
   const classes = useStyles();
+  const [email,setemail] = useState('');
+  const [password,setpassword] = useState('');
+  const submitInfo = () => {
+    Axios.post('http://localhost:5000/api/insert',{
+      email:email, 
+      password:password
+    }).then(()=>{
+      alert('successful insert');
+    });
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -85,6 +96,9 @@ export default function SignInSide() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => {
+                setemail(e.target.value);
+              }}
             />
             <TextField
               variant="outlined"
@@ -96,6 +110,9 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e)=>{
+                setpassword(e.target.value);
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -107,6 +124,7 @@ export default function SignInSide() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick = {submitInfo}
             >
               Sign In
             </Button>
