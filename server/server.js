@@ -6,14 +6,10 @@ const mysql = require('mysql');
 const cors= require('cors')
 
 const db= mysql.createPool({
-
     host: '127.0.0.1',
     user: 'root',
     password: 'anstnfla25',
     database: 'HOTELDataBase'
-
-
-
 })
 
 app.use(cors());
@@ -44,7 +40,7 @@ app.post('/api/insert', (req,res)=>{
 
     const sqlInsert = "INSERT INTO clientInfo (email,password) VALUES (?,?);"
     db.query(sqlInsert, [email,password], (err,result)=>{
-        console.log(result);
+        console.log(email+" "+password);
     });
 });
 

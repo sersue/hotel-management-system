@@ -15,6 +15,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 //npm install @material-ui/icons
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import login from './login';
+import { Redirect } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -60,18 +62,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide() {
+export default function SignInSide({ loginuser}){
   const classes = useStyles();
   const [email,setemail] = useState('');
   const [password,setpassword] = useState('');
   const submitInfo = () => {
-    Axios.post('http://localhost:5000/api/insert',{
-      email:email, 
-      password:password
-    }).then(()=>{
-      alert('successful insert');
-    });
+    if(login(email,password).email===email){
+      loginuser(email,password);
+      alert('로그인');
+    }else{
+      alert("실패");
+    }
+    
+    // Axios.post('http://localhost:5000/api/insert',{
+    //   email:email, 
+    //   password:password
+    // }).then(()=>{
+    //   alert('successful insert');
+    // });
   };
+
+  //const { from } = location.state || { from: { pathname: "/" } };
+  //if (authenticated) return <Redirect to={from} />;
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -119,7 +131,7 @@ export default function SignInSide() {
               label="Remember me"
             />
             <Button
-              type="submit"
+              //type="submit"
               fullWidth
               variant="contained"
               color="primary"
