@@ -15,8 +15,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 //npm install @material-ui/icons
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import login from './login';
-import { Redirect } from "react-router-dom";
+// import login from './login';
+// import { Redirect } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -62,25 +62,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide({ loginuser}){
+export default function SignInSide() {
   const classes = useStyles();
+
   const [email,setemail] = useState('');
   const [password,setpassword] = useState('');
+
+  Axios.defaults.withCredentials = true; // for cookie
   const submitInfo = () => {
-    if(login(email,password).email===email){
-      loginuser(email,password);
-      alert('로그인');
-    }else{
-      alert("실패");
-    }
-    
-    // Axios.post('http://localhost:5000/api/insert',{
-    //   email:email, 
-    //   password:password
-    // }).then(()=>{
-    //   alert('successful insert');
-    // });
+    Axios.post('http://localhost:5000/login',{ // post : login input 하는 페이지 (login router 1)
+      email:email, 
+      password:password
+    }).then(()=>{
+      alert('successful insert');
+    });
   };
+
+  useEffect(()=>{
+    Axios.get('http://localhost:5000/login').then((response)=>{
+      // if(response.data.loggedIn == true){
+        
+      // }
+      console.log(response); //login 되면 console loggedin 값 true
+    }); //get : refresh 하면 login in or not 
+
+  },[]);
+    
+  //   // Axios.post('http://localhost:5000/api/insert',{
+  //   //   email:email, 
+  //   //   password:password
+  //   // }).then(()=>{
+  //   //   alert('successful insert');
+  //   // });
+  // };
 
   //const { from } = location.state || { from: { pathname: "/" } };
   //if (authenticated) return <Redirect to={from} />;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Axios from 'axios'
 
 function Copyright() {
   return (
@@ -47,7 +48,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
+  Axios.defaults.withCredentials = true; // for cookie
   const classes = useStyles();
+  const [firstName,setfirstName]=useState('');
+  const [lastName,setlastName]=useState('');
+  const [email,setemail] = useState('');
+  const [password,setpassword] = useState('');
+  const submitInfo = () => {
+    Axios.post('http://localhost:5000/signup',{
+      firstName:firstName,
+      lastName :lastName,
+      email:email, 
+      password:password
+    }).then(()=>{
+      alert('successful insert');
+    });
+  };
+
+  useEffect(()=>{
+    Axios.get('http://localhost:5000/login').then((response)=>{
+      // if(response.data.loggedIn == true){
+        
+      // }
+      console.log(response); //login 되면 console loggedin 값 true
+    }); //get : refresh 하면 login in or not 
+
+  },[]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -71,6 +97,9 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={(e) => {
+                setfirstName(e.target.value);
+              }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -82,6 +111,9 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                onChange={(e) => {
+                setlastName(e.target.value);
+              }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -93,6 +125,9 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={(e) => {
+                setemail(e.target.value);
+              }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -105,6 +140,9 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) => {
+                setpassword(e.target.value);
+              }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -120,6 +158,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick = {submitInfo}
           >
             Sign Up
           </Button>
