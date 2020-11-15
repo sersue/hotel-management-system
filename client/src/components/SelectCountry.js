@@ -44,6 +44,9 @@ export default function CountrySelect({getcountry}) {
           {option.label} ({option.code}) +{option.phone}
         </React.Fragment>
       )}
+      onChange={(event, newValue) => {
+        getcountry(newValue);
+    }}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -53,9 +56,7 @@ export default function CountrySelect({getcountry}) {
             ...params.inputProps,
             autoComplete: 'new-password', // disable autocomplete and autofill
           }}
-          onChange={(e) => {
-            getcountry(e.target.value);
-        }}
+
         />
       )}
     />

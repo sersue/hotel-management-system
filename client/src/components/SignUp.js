@@ -67,7 +67,7 @@ export default function SignUp() {
   const  getdate = ( date ) => setdate(date);
   const  getcountry = ( country  ) => setcountry(country );
   const submitInfo = () => {
-    alert(country);
+    alert("이름 "+firstName+lastName+"email"+email+"password"+password+"생년월일"+date+"국적"+country.label);
     Axios.post('http://localhost:5000/signup',{
       firstName:firstName,
       lastName :lastName,
