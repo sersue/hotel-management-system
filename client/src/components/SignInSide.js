@@ -65,13 +65,13 @@ const useStyles = makeStyles((theme) => ({
 export default function SignInSide() {
   const classes = useStyles();
 
-  const [email,setemail] = useState('');
+  const [userid,setuserid] = useState('');
   const [password,setpassword] = useState('');
 
   Axios.defaults.withCredentials = true; // for cookie
   const submitInfo = () => {
     Axios.post('http://localhost:5000/login',{ // post : login input 하는 페이지 (login router 1)
-      email:email, 
+      userid:userid, 
       password:password
     }).then(()=>{
       alert('successful insert');
@@ -117,13 +117,13 @@ export default function SignInSide() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="userid"
+              label="ID"
+              name="userid"
+              autoComplete="userid"
               autoFocus
               onChange={(e) => {
-                setemail(e.target.value);
+                setuserid(e.target.value);
               }}
             />
             <TextField
@@ -151,6 +151,7 @@ export default function SignInSide() {
               color="primary"
               className={classes.submit}
               onClick = {submitInfo}
+              href='/'
             >
               Sign In
             </Button>

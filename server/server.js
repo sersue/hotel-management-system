@@ -14,7 +14,7 @@ const db= mysql.createPool({
     host: '127.0.0.1',
     user: 'root',
     password: '1234',
-    database: 'HOTEL'
+    database: 'hotal'
 })
 
 app.use(cors({
@@ -83,6 +83,7 @@ app.get("/login",(req,res)=>{
         res.send({loggedIn:false});
     }
 });
+
 app.post("/login",(req,res)=>{
     
     const email = req.body.email;
@@ -95,8 +96,8 @@ app.post("/login",(req,res)=>{
             if(err){
                 res.send({err:err});
             }
-
-            if(result.length>0){
+            console.log(err);
+            if(result>0){
                bcrypt.compare(password,result[0].password,(error,response)=>{
                    if(response){
                        req.session.user=result;
