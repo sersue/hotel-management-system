@@ -7,14 +7,13 @@ import Reservation from './components/pages/Reservation';
 import Mypage from './components/pages/Mypage';
 import LogIn from './components/pages/LogIn';
 import SignUp from './components/pages/SignUp';
-import Sinin from './components/login';
 
 
 
 function App() {
   const [user, setUser] = useState(null);
   const authenticated = user != null;
-  const login = ( id, password ) => setUser(Sinin( id, password ));
+
   const logout = () => setUser(null);
   const { email, password, name } = user || {};
   console.log(user);
@@ -32,7 +31,7 @@ function App() {
           <Route
             path="/login"
             render={props => (
-              <LogIn  login={login} {...props} />
+              <LogIn/>
             )}
           />
           <Route path='/signup' component={SignUp} />

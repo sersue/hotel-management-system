@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Axios from 'axios'
 
+import SelecltConuntry from './SelectCountry';
+import SelecltDate from './Date';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -54,12 +56,32 @@ export default function SignUp() {
   const [lastName,setlastName]=useState('');
   const [email,setemail] = useState('');
   const [password,setpassword] = useState('');
+  const [date,setdate] = useState('');
+  const [userid,setuserid] = useState('');
+  const [passwordcheck,setpasswordcheck] = useState('');
+  const [phoneNumber,setphoneNumber] = useState('');
+  const [zip,setzip] = useState('');
+  const [aptNumber,setaptNumber] = useState('');
+  const [country,setcountry] = useState('');
+  const [faxNumber,setfaxNumber] = useState('');
+  const  getdate = ( date ) => setdate(date);
+  const  getcountry = ( country  ) => setcountry(country );
   const submitInfo = () => {
+    alert(country);
     Axios.post('http://localhost:5000/signup',{
       firstName:firstName,
       lastName :lastName,
       email:email, 
-      password:password
+      password:password,
+      aptNumber:aptNumber,
+      zip:zip,
+      phoneNumber:phoneNumber,
+      passwordcheck:passwordcheck,
+      userid:userid,
+      date:date,
+      faxNumber:faxNumber,
+      country:country
+
     }).then(()=>{
       alert('successful insert');
     });
@@ -87,6 +109,53 @@ export default function SignUp() {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="userid"
+                label="ID"
+                name="userid"
+                autoComplete="userid"
+                onChange={(e) => {
+                  setuserid(e.target.value);
+              }}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => {
+                  setpassword(e.target.value);
+              }}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password_Check"
+                label="Password Check"
+                type="password_Check"
+                id="password_Check"
+                autoComplete="current-password"
+                onChange={(e) => {
+                  setpasswordcheck(e.target.value);
+              }}
+              />
+            </Grid>
+
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
@@ -116,17 +185,18 @@ export default function SignUp() {
               }}
               />
             </Grid>
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
                 onChange={(e) => {
-                setemail(e.target.value);
+                  setemail(e.target.value);
               }}
               />
             </Grid>
@@ -135,16 +205,69 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+                id="phoneNumber"
+                label="Phone number"
+                name="phoneNumber"
+                autoComplete="phoneNumber"
                 onChange={(e) => {
-                setpassword(e.target.value);
+                  setphoneNumber(e.target.value);
               }}
               />
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="zip"
+                label="우편번호"
+                type="zip"
+                id="zip"
+                autoComplete="zip"
+                onChange={(e) => {
+                  setzip(e.target.value);
+              }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="aptNumber"
+                label="상세주소"
+                type="aptNumber"
+                id="aptNumber"
+                autoComplete="aptNumber"
+                onChange={(e) => {
+                  setaptNumber(e.target.value);
+              }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="faxNumber"
+                label="팩스번호"
+                type="faxNumber"
+                id="faxNumber"
+                autoComplete="faxNumber"
+                onChange={(e) => {
+                  setfaxNumber(e.target.value);
+              }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <SelecltConuntry getcountry ={getcountry}/>
+            </Grid>
+            <Grid item xs={12}>
+              <SelecltDate getdate={getdate}/>
+            </Grid>
+            
+            
+             
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
