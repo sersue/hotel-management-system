@@ -10,7 +10,7 @@ export default function RadioButtonsGroup({getgender}) {
 
   const handleChange = (event) => {
     getgender(event.target.value);
-    setValue(event.target.value)
+    setValue(event.target.value);
   };
 
   return (
