@@ -13,10 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Axios from 'axios'
-import Genderset from './Gender';
+
 import SelecltConuntry from './SelectCountry';
 import SelecltDate from './Date';
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -53,38 +52,21 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   Axios.defaults.withCredentials = true; // for cookie
   const classes = useStyles();
-  const [firstName,setfirstName]=useState('');
-  const [lastName,setlastName]=useState('');
-  const [email,setemail] = useState('');
-  const [password,setpassword] = useState('');
-  const [date,setdate] = useState('');
-  const [userid,setuserid] = useState('');
-  const [passwordcheck,setpasswordcheck] = useState('');
-  const [phoneNumber,setphoneNumber] = useState('');
-  const [zip,setzip] = useState('');
-  const [aptNumber,setaptNumber] = useState('');
-  const [country,setcountry] = useState('');
-  const [faxNumber,setfaxNumber] = useState('');
-  const [Gender,setGender] = useState('');
-  const  getdate = ( date ) => setdate(date);
-  const  getcountry = ( country  ) => setcountry(country );
-  const  getgender = ( Gender  ) => setGender(Gender );
+  const [CheckIn,setCheckIn]=useState('');
+  const [CheckOut,setCheckOut]=useState('');
+  const [Adult,setAdult] = useState('');
+  const [Kid,setKid] = useState('');
+  const [PayDate,setDate] = useState('');
+  const [PayType,setPayType] = useState('');
+  const [PriceWon,setPriceWon] = useState('');
+  const [RoomNumber,setRoomNumber] = useState('');
+  const [CustomerId,setCustomerId] = useState('');
+
+  //const  getdate = ( date ) => setdate(date);
+  //const  getcountry = ( country  ) => setcountry(country );
   const submitInfo = () => {
-    alert(Gender);
     Axios.post('http://localhost:5000/signup',{
-      firstName:firstName,
-      lastName :lastName,
-      email:email, 
-      password:password,
-      aptNumber:aptNumber,
-      zip:zip,
-      phoneNumber:phoneNumber,
-      passwordcheck:passwordcheck,
-      userid:userid,
-      date:date,
-      faxNumber:faxNumber,
-      country:country.label,
-      Gender:Gender
+
 
     }).then(()=>{
       alert('successful insert');
@@ -114,36 +96,8 @@ export default function SignUp() {
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="userid"
-                label="ID"
-                name="userid"
-                autoComplete="userid"
-                onChange={(e) => {
-                  setuserid(e.target.value);
-              }}
-              />
+              <SelecltDate/>
             </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(e) => {
-                  setpassword(e.target.value);
-              }}
-              />
-            </Grid>
-
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -155,7 +109,7 @@ export default function SignUp() {
                 id="password_Check"
                 autoComplete="current-password"
                 onChange={(e) => {
-                  setpasswordcheck(e.target.value);
+                  //setpasswordcheck(e.target.value);
               }}
               />
             </Grid>
@@ -171,7 +125,7 @@ export default function SignUp() {
                 label="First Name"
                 autoFocus
                 onChange={(e) => {
-                setfirstName(e.target.value);
+                //setfirstName(e.target.value);
               }}
               />
             </Grid>
@@ -185,95 +139,12 @@ export default function SignUp() {
                 name="lastName"
                 autoComplete="lname"
                 onChange={(e) => {
-                setlastName(e.target.value);
+                //setlastName(e.target.value);
               }}
               />
             </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
-                onChange={(e) => {
-                  setemail(e.target.value);
-              }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="phoneNumber"
-                label="Phone number"
-                name="phoneNumber"
-                autoComplete="phoneNumber"
-                onChange={(e) => {
-                  setphoneNumber(e.target.value);
-              }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="zip"
-                label="우편번호"
-                type="zip"
-                id="zip"
-                autoComplete="zip"
-                onChange={(e) => {
-                  setzip(e.target.value);
-              }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="aptNumber"
-                label="상세주소"
-                type="aptNumber"
-                id="aptNumber"
-                autoComplete="aptNumber"
-                onChange={(e) => {
-                  setaptNumber(e.target.value);
-              }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="faxNumber"
-                label="팩스번호"
-                type="faxNumber"
-                id="faxNumber"
-                autoComplete="faxNumber"
-                onChange={(e) => {
-                  setfaxNumber(e.target.value);
-              }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <SelecltConuntry getcountry ={getcountry}/>
-            </Grid>
-            <Grid item xs={12}>
-              <SelecltDate getdate={getdate} labelname={"생년월일"}/>
-            </Grid>
-
-           
-            <Grid item xs={12}>
-              <Genderset getgender={getgender}></Genderset>
-            </Grid> 
+ 
+            
              
             <Grid item xs={12}>
               <FormControlLabel

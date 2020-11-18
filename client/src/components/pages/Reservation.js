@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../App.css';
+import Reservation from './../Reservation';
 
 export default function reservation() {
-  return <h1 className='reservation'>RESERVATION</h1>;
+  return <Reservation></Reservation>
 }

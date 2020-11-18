@@ -1,4 +1,4 @@
-import React,{useState}from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
@@ -16,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DatePickers({getdate}) {
   const classes = useStyles();
-  const [date,setdate] = useState('');
+
   return (
     <form className={classes.container} noValidate>
       <TextField
         id="date"
-        label="Birthday"
+        label="생년월일"
         type="date"
-        defaultValue="2017-05-24"
+        defaultValue="0000-00-00"
         className={classes.textField}
         InputLabelProps={{
           shrink: true,
