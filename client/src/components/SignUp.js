@@ -72,18 +72,17 @@ export default function SignUp() {
   const submitInfo = () => {
     alert(Gender);
     Axios.post('http://localhost:5000/signup',{
-      firstName:firstName,
-      lastName :lastName,
-      email:email, 
-      password:password,
-      aptNumber:aptNumber,
-      zip:zip,
-      phoneNumber:phoneNumber,
-      passwordcheck:passwordcheck,
-      userid:userid,
-      date:date,
-      faxNumber:faxNumber,
-      country:country.label,
+      First_Name:firstName,
+      Last_Name :lastName,
+      E_Mail:email, 
+      Login_PW:password,
+      Apt_Num:aptNumber,
+      Zip:zip,
+      Phone_Number:phoneNumber,
+      Login_ID:userid,
+      Birthday:date,
+      Fax:faxNumber,
+      Nationality:country.label,
       Gender:Gender
 
     }).then(()=>{
