@@ -71,8 +71,8 @@ export default function SignInSide() {
   Axios.defaults.withCredentials = true; // for cookie
   const submitInfo = () => {
     Axios.post('http://localhost:5000/login',{ // post : login input 하는 페이지 (login router 1)
-      userid:userid, 
-      password:password
+      Login_ID:userid, 
+      Login_PW:password
     }).then(()=>{
       alert('successful insert');
     });

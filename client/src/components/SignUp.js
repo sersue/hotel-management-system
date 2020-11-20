@@ -70,7 +70,7 @@ export default function SignUp() {
   const  getcountry = ( country  ) => setcountry(country );
   const  getgender = ( Gender  ) => setGender(Gender );
   const submitInfo = () => {
-    alert(Gender);
+    alert(date);
     Axios.post('http://localhost:5000/signup',{
       First_Name:firstName,
       Last_Name :lastName,
