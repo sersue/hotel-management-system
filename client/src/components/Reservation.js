@@ -8,14 +8,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LocalHotelIcon from '@material-ui/icons/LocalHotel';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Axios from 'axios'
-
-import SelecltConuntry from './SelectCountry';
+import Axios from 'axios';
 import SelecltDate from './Date';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -41,12 +40,19 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '200%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3, 3, 2),
+    width : 200,
   },
+
+  re:{
+    margin : theme.spacing(1,1,1),
+    backgroundColor :'#c8c8c8',
+    borderRadius: '7px',
+  }
 }));
 
 export default function SignUp() {
@@ -56,18 +62,16 @@ export default function SignUp() {
   const [CheckOut,setCheckOut]=useState('');
   const [Adult,setAdult] = useState('');
   const [Kid,setKid] = useState('');
-  const [PayDate,setDate] = useState('');
+  const [PayDate,setPayDate] = useState('');
   const [PayType,setPayType] = useState('');
   const [PriceWon,setPriceWon] = useState('');
   const [RoomNumber,setRoomNumber] = useState('');
   const [CustomerId,setCustomerId] = useState('');
 
-  //const  getdate = ( date ) => setdate(date);
-  //const  getcountry = ( country  ) => setcountry(country );
+  const  getCheckIn = ( date ) => setCheckIn(date);
+  const  getCheckOut = ( date  ) => setCheckOut(date );
   const submitInfo = () => {
     Axios.post('http://localhost:5000/signup',{
-
-
     }).then(()=>{
       alert('successful insert');
     });
@@ -88,87 +92,62 @@ export default function SignUp() {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <LocalHotelIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Reservation
         </Typography>
         <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <SelecltDate/>
+          <Grid className={classes.re} container spacing={2}>
+            <Grid item xs={12} sm={3}>
+              <SelecltDate getdate={getCheckIn} Lableing={"체그인"}/>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={3}>
+              <SelecltDate getdate={getCheckOut} Lableing={"체그인"}/>
+            </Grid>
+            <Grid item xs={12} sm={3}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                name="password_Check"
-                label="Password Check"
-                type="password_Check"
-                id="password_Check"
+                name="Adult"
+                label="Adult"
+                type="Adult"
+                id="Adult"
                 autoComplete="current-password"
                 onChange={(e) => {
-                  //setpasswordcheck(e.target.value);
+                  setAdult(e.target.value);
               }}
               />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={3}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="Kid"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="Kid"
+                label="Kid"
                 autoFocus
                 onChange={(e) => {
-                //setfirstName(e.target.value);
+                setKid(e.target.value);
               }}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                onChange={(e) => {
-                //setlastName(e.target.value);
-              }}
-              />
-            </Grid>
- 
-            
-             
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick = {submitInfo}
-            href='/'
-          >
-            Sign Up
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="login" variant="body2">
-                Already have an account? Sign in
-              </Link>
+            </Grid>    
+
+            <Grid container justify="center">
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick = {submitInfo}
+                href='/'
+              >
+                NEXT
+              </Button>
             </Grid>
           </Grid>
         </form>

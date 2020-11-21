@@ -266,7 +266,7 @@ export default function SignUp() {
               <SelecltConuntry getcountry ={getcountry}/>
             </Grid>
             <Grid item xs={12}>
-              <SelecltDate getdate={getdate} labelname={"생년월일"}/>
+              <SelecltDate getdate={getdate} Lableing={"생년월일"}/>
             </Grid>
 
            
