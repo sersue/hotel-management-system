@@ -65,14 +65,14 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Check IN-OUT', 'Room Type', 'Review your order'];
 
-function getStepContent(step,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon}) {
+function getStepContent(step,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon,CheckIn,CheckOut,Adult,Kid,PriceWon}) {
   switch (step) {
     case 0:
       return <CheckInOutform GetCheakIN = {getCheckIn} GetCheakOUT= {getCheckOut} GetAdult= {getAdult} GetKid= {getKid}/>;
     case 1:
       return <RoomTypeform GetPriceWon={getPriceWon}/>;
     case 2:
-      return <Review />;
+      return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon}/>;
     default:
       throw new Error('Unknown step');
   }
@@ -159,7 +159,7 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon})}
+                {getStepContent(activeStep,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon,CheckIn,CheckOut,Adult,Kid,PriceWon})}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>

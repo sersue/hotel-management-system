@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -85,12 +85,28 @@ const tiers = [
     buttonVariant: 'outlined',
     
   },
+  {
+    title: '6인실',
+    price: '200,000',
+    description: [
+      '50 users included',
+      '30 GB of storage',
+      'Help center access',
+      'Phone & email support',
+      
+    ],
+    buttonText: '선택',
+    buttonVariant: 'outlined',
+    
+  },
 ];
 
 export default function Pricing({GetPriceWon}) {
+  const [selectPrice,setselectPrice] = useState(null);
   const classes = useStyles();
-  const ch = (data)=> {
-    console.log(data);
+  const choose = (data)=> {
+    GetPriceWon(data);
+    setselectPrice(data);
   };
   return (
     <React.Fragment>
@@ -103,6 +119,7 @@ export default function Pricing({GetPriceWon}) {
       
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="flex-end">
+          
           {tiers.map((tier) => (
             <Grid item key={tier.title} xs={12} sm={6} md={4}>
               <Card>
@@ -133,7 +150,7 @@ export default function Pricing({GetPriceWon}) {
                 </CardContent>
 
                 <CardActions >
-                  <Button fullWidth id= {tier.title} variant={tier.buttonVariant} color="primary" onClick={alert(tier.title)}>
+                  <Button fullWidth key= {tier.title} variant={tier.buttonVariant} color="primary" onClick={()=>choose(tier.price)}>
                     {tier.buttonText}
                   </Button>
                 </CardActions>
