@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../App.css';
-import exi from './../ex';
 
 export default function Mypage() {
-  return <exi></exi>;
+  return <h1 className='mypage'>MYPAGE</h1>;
 }
