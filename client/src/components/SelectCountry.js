@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CountrySelect({getcountry}) {
+export default function CountrySelect({getNationality}) {
   const classes = useStyles();
 
   return (
@@ -45,7 +45,7 @@ export default function CountrySelect({getcountry}) {
         </React.Fragment>
       )}
       onChange={(event, newValue) => {
-        getcountry(newValue);
+        getNationality(newValue);
     }}
       renderInput={(params) => (
         <TextField

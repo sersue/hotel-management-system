@@ -53,36 +53,36 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   Axios.defaults.withCredentials = true; // for cookie
   const classes = useStyles();
-  const [firstName,setfirstName]=useState('');
-  const [lastName,setlastName]=useState('');
-  const [email,setemail] = useState('');
-  const [password,setpassword] = useState('');
-  const [date,setdate] = useState('');
-  const [userid,setuserid] = useState('');
-  const [passwordcheck,setpasswordcheck] = useState('');
-  const [phoneNumber,setphoneNumber] = useState('');
-  const [zip,setzip] = useState('');
-  const [aptNumber,setaptNumber] = useState('');
-  const [country,setcountry] = useState('');
-  const [faxNumber,setfaxNumber] = useState('');
+  const [First_Name,setFirst_Name]=useState('');
+  const [Last_Name,setLast_Name]=useState('');
+  const [E_Mail,setE_Mail] = useState('');
+  const [Login_PW,setLogin_PW] = useState('');
+  const [Birthday,setBirthday] = useState('');
+  const [Login_ID,setLogin_ID] = useState('');
+  const [Login_PWcheck,setLogin_PWcheck] = useState('');
+  const [Phone_Number,setPhone_Number] = useState('');
+  const [Zip,setZip] = useState('');
+  const [Apt_Num,setApt_Num] = useState('');
+  const [Nationality,setNationality] = useState('');
+  const [Fax,setFax] = useState('');
   const [Gender,setGender] = useState('');
-  const  getdate = ( date ) => setdate(date);
-  const  getcountry = ( country  ) => setcountry(country );
+  const  getBirthday = ( Birthday ) => setBirthday(Birthday);
+  const  getNationality = ( Nationality  ) => setNationality(Nationality );
   const  getgender = ( Gender  ) => setGender(Gender );
   const submitInfo = () => {
-    alert(date);
+    alert(Birthday);
     Axios.post('http://localhost:5000/signup',{
-      First_Name:firstName,
-      Last_Name :lastName,
-      E_Mail:email, 
-      Login_PW:password,
-      Apt_Num:aptNumber,
-      Zip:zip,
-      Phone_Number:phoneNumber,
-      Login_ID:userid,
-      Birthday:date,
-      Fax:faxNumber,
-      Nationality:country.label,
+      First_Name:First_Name,
+      Last_Name :Last_Name,
+      E_Mail:E_Mail, 
+      Login_PW:Login_PW,
+      Apt_Num:Apt_Num,
+      Zip:Zip,
+      Phone_Number:Phone_Number,
+      Login_ID:Login_ID,
+      Birthday:Birthday,
+      Fax:Fax,
+      Nationality:Nationality.label,
       Gender:Gender
 
     }).then(()=>{
@@ -110,19 +110,19 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValiBirthday>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                id="userid"
+                id="Login_ID"
                 label="ID"
-                name="userid"
-                autoComplete="userid"
+                name="Login_ID"
+                autoComplete="Login_ID"
                 onChange={(e) => {
-                  setuserid(e.target.value);
+                  setLogin_ID(e.target.value);
               }}
               />
             </Grid>
@@ -132,13 +132,13 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+                name="Login_PW"
+                label="Login_PW"
+                type="Login_PW"
+                id="Login_PW"
+                autoComplete="current-Login_PW"
                 onChange={(e) => {
-                  setpassword(e.target.value);
+                  setLogin_PW(e.target.value);
               }}
               />
             </Grid>
@@ -148,13 +148,13 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                name="password_Check"
-                label="Password Check"
-                type="password_Check"
-                id="password_Check"
-                autoComplete="current-password"
+                name="Login_PW_Check"
+                label="Login_PW Check"
+                type="Login_PW_Check"
+                id="Login_PW_Check"
+                autoComplete="current-Login_PW"
                 onChange={(e) => {
-                  setpasswordcheck(e.target.value);
+                  setLogin_PWcheck(e.target.value);
               }}
               />
             </Grid>
@@ -162,15 +162,15 @@ export default function SignUp() {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="First_Name"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
+                id="First_Name"
                 label="First Name"
                 autoFocus
                 onChange={(e) => {
-                setfirstName(e.target.value);
+                setFirst_Name(e.target.value);
               }}
               />
             </Grid>
@@ -179,12 +179,12 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
+                id="Last_Name"
                 label="Last Name"
-                name="lastName"
+                name="Last_Name"
                 autoComplete="lname"
                 onChange={(e) => {
-                setlastName(e.target.value);
+                setLast_Name(e.target.value);
               }}
               />
             </Grid>
@@ -194,12 +194,12 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
+                id="E_Mail"
+                label="E_Mail"
+                name="E_Mail"
+                autoComplete="E_Mail"
                 onChange={(e) => {
-                  setemail(e.target.value);
+                  setE_Mail(e.target.value);
               }}
               />
             </Grid>
@@ -208,12 +208,12 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="phoneNumber"
+                id="Phone_Number"
                 label="Phone number"
-                name="phoneNumber"
-                autoComplete="phoneNumber"
+                name="Phone_Number"
+                autoComplete="Phone_Number"
                 onChange={(e) => {
-                  setphoneNumber(e.target.value);
+                  setPhone_Number(e.target.value);
               }}
               />
             </Grid>
@@ -222,13 +222,13 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                name="zip"
+                name="Zip"
                 label="우편번호"
-                type="zip"
-                id="zip"
-                autoComplete="zip"
+                type="Zip"
+                id="Zip"
+                autoComplete="Zip"
                 onChange={(e) => {
-                  setzip(e.target.value);
+                  setZip(e.target.value);
               }}
               />
             </Grid>
@@ -237,13 +237,13 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                name="aptNumber"
+                name="Apt_Num"
                 label="상세주소"
-                type="aptNumber"
-                id="aptNumber"
-                autoComplete="aptNumber"
+                type="Apt_Num"
+                id="Apt_Num"
+                autoComplete="Apt_Num"
                 onChange={(e) => {
-                  setaptNumber(e.target.value);
+                  setApt_Num(e.target.value);
               }}
               />
             </Grid>
@@ -252,21 +252,21 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                name="faxNumber"
+                name="Fax"
                 label="팩스번호"
-                type="faxNumber"
-                id="faxNumber"
-                autoComplete="faxNumber"
+                type="Fax"
+                id="Fax"
+                autoComplete="Fax"
                 onChange={(e) => {
-                  setfaxNumber(e.target.value);
+                  setFax(e.target.value);
               }}
               />
             </Grid>
             <Grid item xs={12}>
-              <SelecltConuntry getcountry ={getcountry}/>
+              <SelecltConuntry getNationality ={getNationality}/>
             </Grid>
             <Grid item xs={12}>
-              <SelecltDate getdate={getdate} Lableing={"생년월일"}/>
+              <SelecltDate getBirthday={getBirthday} Lableing={"생년월일"}/>
             </Grid>
 
            
@@ -276,8 +276,8 @@ export default function SignUp() {
              
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                control={<Checkbox value="allowExtraE_Mails" color="primary" />}
+                label="I want to receive inspiration, marketing promotions and upBirthdays via E_Mail."
               />
             </Grid>
           </Grid>
