@@ -12,6 +12,7 @@ import CheckInOutform from './CheckInOutform';
 import RoomTypeform from './RoomTypeform';
 import Axios from 'axios';
 import Review from './Review';
+import SelectRoom from './SelectRoomform';
 
 function Copyright() {
   return (
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
+      width: 700,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
@@ -63,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Check IN-OUT', 'Room Type', 'Review your order'];
+const steps = ['Check IN-OUT', 'Room Type','Select Room','Review your order'];
 
 function getStepContent(step,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon,CheckIn,CheckOut,Adult,Kid,PriceWon}) {
   switch (step) {
@@ -72,7 +73,9 @@ function getStepContent(step,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon
     case 1:
       return <RoomTypeform GetPriceWon={getPriceWon}/>;
     case 2:
-      return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon}/>;
+      return <SelectRoom/>;
+    case 3:
+      return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon}/>;  
     default:
       throw new Error('Unknown step');
   }
@@ -109,7 +112,7 @@ export default function Checkout() {
   };
 
   const submitInfo = () => {
-    alert(PriceWon);
+    setActiveStep(activeStep + 1);
     Axios.post('http://localhost:5000/signup',{
     }).then(()=>{
       alert('successful insert');
