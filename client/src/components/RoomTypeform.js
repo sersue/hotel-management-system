@@ -53,7 +53,7 @@ const tiers = [
         '여기 내용 필요',
         
     ],
-    buttonText: '선택',
+    buttonText: '자세히 보기',
     buttonVariant: 'outlined',
     
   },
@@ -67,8 +67,8 @@ const tiers = [
       'Help center access',
       'Priority email support',
     ],
-    buttonText: '선택',
-    buttonVariant: 'contained',
+    buttonText: '자세히 보기',
+    buttonVariant: 'outlined',
     
   },
   {
@@ -81,7 +81,7 @@ const tiers = [
       'Phone & email support',
       
     ],
-    buttonText: '선택',
+    buttonText: '자세히 보기',
     buttonVariant: 'outlined',
     
   },
@@ -95,18 +95,18 @@ const tiers = [
       'Phone & email support',
       
     ],
-    buttonText: '선택',
+    buttonText: '자세히 보기',
     buttonVariant: 'outlined',
     
   },
 ];
 
-export default function Pricing({GetPriceWon}) {
+export default function Pricing({GetPriceWon,GetRoomType}) {
   const [selectPrice,setselectPrice] = useState(null);
   const classes = useStyles();
   const choose = (data)=> {
-    GetPriceWon(data);
-    setselectPrice(data);
+    GetPriceWon(data.price);
+    GetRoomType(data.title);
   };
   return (
     <React.Fragment>
@@ -128,7 +128,6 @@ export default function Pricing({GetPriceWon}) {
                   subheader={tier.subheader}
                   titleTypographyProps={{ align: 'center' }}
                   subheaderTypographyProps={{ align: 'center' }}
-                  action={tier.title === 'Pro' ? <StarIcon /> : null} // 별옵션
                   className={classes.cardHeader}
                 />
                 <CardContent>
@@ -150,7 +149,7 @@ export default function Pricing({GetPriceWon}) {
                 </CardContent>
 
                 <CardActions >
-                  <Button fullWidth key= {tier.title} variant={tier.buttonVariant} color="primary" onClick={()=>choose(tier.price)}>
+                  <Button fullWidth key= {tier.title} variant={tier.buttonVariant} color="primary" onClick={()=>choose(tier)}>
                     {tier.buttonText}
                   </Button>
                 </CardActions>

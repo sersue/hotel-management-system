@@ -66,16 +66,16 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Check IN-OUT', 'Room Type','Select Room','Review your order'];
 
-function getStepContent(step,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon,CheckIn,CheckOut,Adult,Kid,PriceWon}) {
+function getStepContent(step,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon,getRoomType,CheckIn,CheckOut,Adult,Kid,PriceWon,getRoomNumber,RoomType,RoomNumber}) {
   switch (step) {
     case 0:
       return <CheckInOutform GetCheakIN = {getCheckIn} GetCheakOUT= {getCheckOut} GetAdult= {getAdult} GetKid= {getKid}/>;
     case 1:
-      return <RoomTypeform GetPriceWon={getPriceWon}/>;
+      return <RoomTypeform GetPriceWon={getPriceWon} GetRoomType={getRoomType}/>;
     case 2:
-      return <SelectRoom/>;
+      return <SelectRoom Getroomnuber={getRoomNumber} UserSelectRoomType={RoomType}/>;
     case 3:
-      return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon}/>;  
+      return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon} RoomNumber={RoomNumber}/>;  
     default:
       throw new Error('Unknown step');
   }
@@ -91,16 +91,19 @@ export default function Checkout() {
   const [PayDate,setPayDate] = useState('');
   const [PayType,setPayType] = useState('');
   const [PriceWon,setPriceWon] = useState('');
-  const [RoomNumber,setRoomNumber] = useState('');
+  const [RoomNumber,setRoomNumber] = useState([]);
   const [CustomerId,setCustomerId] = useState('');
+  const [RoomType,setRoomType] = useState('');
+
 
   const getCheckIn = ( date ) => setCheckIn(date);
   const getCheckOut = ( date  ) => setCheckOut(date);
   const getAdult = (date) => setAdult(date);
   const getKid = (date) => setKid(date);
   const getPriceWon = (date) => setPriceWon(date);
-
-
+  const getRoomNumber = (date) => setRoomNumber(date);
+  const getRoomType = (date) => setRoomType(date);
+  let today = new Date();  
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -114,6 +117,14 @@ export default function Checkout() {
   const submitInfo = () => {
     setActiveStep(activeStep + 1);
     Axios.post('http://localhost:5000/signup',{
+      Check_In :CheckIn,
+      Check_Out :CheckOut,
+      Price_Won :PriceWon,
+      Adult : Adult,
+      Child :Kid,
+      Pay_Type: 'Card',
+      Room_Num: RoomNumber,
+      Pay_Date: (today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()),
     }).then(()=>{
       alert('successful insert');
     });
@@ -162,7 +173,7 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon,CheckIn,CheckOut,Adult,Kid,PriceWon})}
+                {getStepContent(activeStep,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon,getRoomType,CheckIn,CheckOut,Adult,Kid,PriceWon,getRoomNumber,RoomType,RoomNumber})}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>

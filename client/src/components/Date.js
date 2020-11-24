@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DatePickers({getBirthday,Lableing}) {
+export default function DatePickers({getdate,Lableing}) {
   const classes = useStyles();
   return (
     <form className={classes.container} noValidate>
@@ -28,7 +28,7 @@ export default function DatePickers({getBirthday,Lableing}) {
           shrink: true,
         }}
         onChange={(e) => {
-          getBirthday(e.target.value);
+          getdate(e.target.value);
         }}
       />
     </form>

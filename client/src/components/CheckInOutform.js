@@ -14,10 +14,10 @@ export default function AddressForm({GetCheakIN,GetCheakOUT,GetAdult,GetKid}) {
 
       <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
-              <SelecltDate getdate= {GetCheakIN} Lableing={"체그인"}/>
+              <SelecltDate getdate= {GetCheakIN} Lableing={"Check IN"}/>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <SelecltDate getdate= {GetCheakOUT} Lableing={"체그인"}/>
+              <SelecltDate getdate= {GetCheakOUT} Lableing={"Check OUT"}/>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
