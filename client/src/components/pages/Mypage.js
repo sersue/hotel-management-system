@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../App.css';
+import Mypa from '../MyPage';
 
 export default function Mypage() {
-  return <h1 className='mypage'>MYPAGE</h1>;
+  return <Mypa></Mypa>;
 }
