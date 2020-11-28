@@ -145,13 +145,13 @@ export default function SignInSide() {
               label="Remember me"
             />
             <Button
-              //type="submit"
+              // type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
               onClick = {submitInfo}
-              href='/'
+              // href='/'
             >
               Sign In
             </Button>

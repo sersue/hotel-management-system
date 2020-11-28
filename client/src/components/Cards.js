@@ -14,7 +14,7 @@ function Cards() {
               label='Luxury'
               path='/mypage'
             />
-            <CardItem
+            <CardItem to
               src='images/img-lounge.jpg'
               text='Hotel Lounge Hotel Lounge Hotel Lounge'
               label='Luxury'

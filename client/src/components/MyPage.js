@@ -58,8 +58,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MyPage() {
-  Axios.defaults.withCredentials = true; // for cookie
   const classes = useStyles();
+  
 
   return (
     <React.Fragment>
@@ -71,18 +71,20 @@ export default function MyPage() {
           </Typography>
           <Revieww></Revieww>
           <React.Fragment>
-          <div className={classes.buttons}>
+          {/* <div className={classes.buttons}>
                   {
                     <Button 
                     href='/'
                     variant="contained"
                     color="primary"
                     onClick={onclick} 
-                    className={classes.button}>
+                    className={classes.button}
+                    // onClick = {submitInfo}
+                    >
                       수정하기
                     </Button>
                 }
-                </div>
+                </div> */}
           </React.Fragment>
         </Paper>
         <Copyright />
