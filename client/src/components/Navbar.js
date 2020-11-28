@@ -36,12 +36,21 @@ function Navbar() {
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+          <li className='nav-item'>
+              <Link
+                to='/reservation'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                예약하기
+              </Link>
+            </li>
             <li className='nav-item'>
               <Link
-                 to='/' className='nav-links'
+                 to='/confirmation' className='nav-links'
                  onClick={closeMobileMenu}
                  >
-                Home
+                예약확인
               </Link>
             </li>
             <li className='nav-item'>
@@ -50,18 +59,10 @@ function Navbar() {
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                My Page
+                내 정보
               </Link>
             </li>
-            <li className='nav-item'>
-              <Link
-                to='/reservation'
-                className='nav-links'
-                onClick={closeMobileMenu}
-              >
-                Reservation
-              </Link>
-            </li>
+            
             <li>
               <Link
                 to='/login'

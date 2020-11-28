@@ -7,6 +7,7 @@ import Reservation from './components/pages/Reservation';
 import Mypage from './components/pages/Mypage';
 import LogIn from './components/pages/LogIn';
 import SignUp from './components/pages/SignUp';
+import Confirmation from './components/pages/Confirmation';
 
 
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/' exact component={Home} />
           <Route path='/mypage' component={Mypage} />
           <Route path='/reservation' component={Reservation} />
+          <Route path='/confirmation' component={Confirmation} />
           <Route
             path="/login"
             render={props => (
