@@ -4,11 +4,12 @@ const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 let router = express.Router();
-
+const cors= require('cors');
 
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
+const saltRounds =10;
 
 const db= mysql.createConnection({
     
@@ -21,10 +22,27 @@ const db= mysql.createConnection({
   
 });
 
+function getFormatDate(date){
+    var year = date.getFullYear();              //yyyy
+    var month = (1 + date.getMonth());          //M
+    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+    var day = date.getDate();                   //d
+    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+    return  year + '-' + month + '-' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+}
+
+router.use(cors({
+    origin : ["http://localhost:3000"],
+    methods:["GET","POST"],
+    credentials :true
+
+}));
+
+
 router.get('/',function (req,res,next){
     res.send('respond with a resource');
 });
-
+var date = new Date();
 router
 .post('/', (req,res)=>{
     const Login_ID = req.body.Login_ID;
@@ -40,8 +58,8 @@ router
     const Rank = 'red';
     const Validity_Month= 3;
     const Mileage = 1;
-    const Reg_Date='2020-11-20';
-    const Membership_Due_Date='2020-11-20';
+    const Reg_Date=getFormatDate(date);
+    const Membership_Due_Date=getFormatDate(date);
     const Nationality = req.body.Nationality;
     const Birthday= req.body.Birthday;
    const Gender = req.body.Gender;
@@ -65,19 +83,19 @@ router
                 if(err){
                     console.log(err);
                 }        
-                // console.log(hash);
+                console.log(hash);
                 db.query(
                     sqlInsert2,
                     [First_Name,Last_Name,E_Mail,Phone_Number,Apt_Num,Fax,Nationality,Birthday,Gender],
                     (err,result)=>{
-                        // console.log(First_Name+""+Last_Name+""+E_Mail+" "+Login_PW);
+                        console.log(First_Name+""+Last_Name+""+E_Mail+" "+Login_PW);
                         console.log(err);
                     });
                 db.query( 
                     sqlInsert,
                     [Login_ID,hash,Rank,Validity_Month,Mileage,Reg_Date,Membership_Due_Date],
                     (err,result)=>{
-                        // console.log(First_Name+""+Last_Name+""+E_Mail+" "+Login_PW);
+                        console.log(First_Name+""+Last_Name+""+E_Mail+" "+Login_PW);
                         console.log(err);
                     });
                 

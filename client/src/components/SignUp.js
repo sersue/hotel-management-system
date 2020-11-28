@@ -53,41 +53,46 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   Axios.defaults.withCredentials = true; // for cookie
   const classes = useStyles();
-  const [First_Name,setFirst_Name]=useState('');
-  const [Last_Name,setLast_Name]=useState('');
-  const [E_Mail,setE_Mail] = useState('');
-  const [Login_PW,setLogin_PW] = useState('');
-  const [Birthday,setBirthday] = useState('');
-  const [Login_ID,setLogin_ID] = useState('');
-  const [Login_PWcheck,setLogin_PWcheck] = useState('');
-  const [Phone_Number,setPhone_Number] = useState('');
-  const [Zip,setZip] = useState('');
-  const [Apt_Num,setApt_Num] = useState('');
-  const [Nationality,setNationality] = useState('');
-  const [Fax,setFax] = useState('');
-  const [Gender,setGender] = useState('');
+  const [First_Name,setFirst_Name]=useState(null);
+  const [Last_Name,setLast_Name]=useState(null);
+  const [E_Mail,setE_Mail] = useState(null);
+  const [Login_PW,setLogin_PW] = useState(null);
+  const [Birthday,setBirthday] = useState(null);
+  const [Login_ID,setLogin_ID] = useState(null);
+  const [Login_PWcheck,setLogin_PWcheck] = useState(null);
+  const [Phone_Number,setPhone_Number] = useState(null);
+  const [Zip,setZip] = useState(null);
+  const [Apt_Num,setApt_Num] = useState(null);
+  const [Nationality,setNationality] = useState(null);
+  const [Fax,setFax] = useState('000-000-0000');
+  const [Gender,setGender] = useState('NO');
+
   const  getBirthday = ( Birthday ) => setBirthday(Birthday);
   const  getNationality = ( Nationality  ) => setNationality(Nationality );
   const  getgender = ( Gender  ) => setGender(Gender );
   const submitInfo = () => {
-    alert(Birthday);
-    Axios.post('http://localhost:5000/signup',{
-      First_Name:First_Name,
-      Last_Name :Last_Name,
-      E_Mail:E_Mail, 
-      Login_PW:Login_PW,
-      Apt_Num:Apt_Num,
-      Zip:Zip,
-      Phone_Number:Phone_Number,
-      Login_ID:Login_ID,
-      Birthday:Birthday,
-      Fax:Fax,
-      Nationality:Nationality.label,
-      Gender:Gender
+    if (Apt_Num!=null&&Gender!=null&&Zip!=null&&Nationality!=null&&Phone_Number!=null&&Birthday!=null&&Login_PW !=null&&Login_PWcheck==Login_PW && Login_ID!=null && First_Name !=null&&Last_Name !=null&&E_Mail!=null) {
+      Axios.post('http://localhost:5000/signup',{
+        First_Name:First_Name,
+        Last_Name :Last_Name,
+        E_Mail:E_Mail, 
+        Login_PW:Login_PW,
+        Apt_Num:Apt_Num,
+        Zip:Zip,
+        Phone_Number:Phone_Number,
+        Login_ID:Login_ID,
+        Birthday:Birthday,
+        Fax:Fax,
+        Nationality:Nationality.label,
+        Gender:Gender
+      }).then(()=>{
+        alert('successful insert');
+      });
 
-    }).then(()=>{
-      alert('successful insert');
-    });
+      
+    }else{
+      alert("데이터입력이 틀렸습니다.");
+    }
   };
 
   useEffect(()=>{
@@ -133,8 +138,8 @@ export default function SignUp() {
                 required
                 fullWidth
                 name="Login_PW"
-                label="Login_PW"
-                type="Login_PW"
+                label="PW"
+                type="password"
                 id="Login_PW"
                 autoComplete="current-Login_PW"
                 onChange={(e) => {
@@ -149,8 +154,8 @@ export default function SignUp() {
                 required
                 fullWidth
                 name="Login_PW_Check"
-                label="Login_PW Check"
-                type="Login_PW_Check"
+                label="PW Check"
+                type="password"
                 id="Login_PW_Check"
                 autoComplete="current-Login_PW"
                 onChange={(e) => {
@@ -195,7 +200,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="E_Mail"
-                label="E_Mail"
+                label="E-Mail"
                 name="E_Mail"
                 autoComplete="E_Mail"
                 onChange={(e) => {
@@ -250,7 +255,6 @@ export default function SignUp() {
             <Grid item xs={12} sm={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 name="Fax"
                 label="팩스번호"
@@ -282,13 +286,12 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Button
-            type="submit"
+            type=""
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
             onClick = {submitInfo}
-            href='/'
           >
             Sign Up
           </Button>
