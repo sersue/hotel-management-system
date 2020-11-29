@@ -75,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Review1() {
+  Axios.defaults.withCredentials = true;
   const classes = useStyles();
 
   const [ID,setID]=useState('');
@@ -87,20 +88,23 @@ export default function Review1() {
   const [card_serial,setcard_serial]=useState('');
 
   const [loginstatus,setloginstatus] = useState('');
-  Axios.defaults.withCredentials = true;
+ 
 
-  const submitInfo = () => {
-    // alert("hi");
-    Axios.post('http://localhost:5000/signup',{
-      // Login_ID:ID,
-      // E_Mail:Email,
-      // Phone_Number:Phone,
+  const submitInfo1 = () => {
+    if(card_bin!=null&&card_cvc!=null&&card_validity!=null&&card_password!=null&&card_serial!=null){
+      Axios.post('http://localhost:5000/mypage',{
+      
       BIN_Number:card_bin,
+      Card_Serial:card_serial,
       CVC:card_cvc,
       Validity:card_validity,
       Card_Password:card_password,
-      Card_Serial:card_serial
-    }).then((alert)=>{
+      
+      // Login_ID:ID,
+      // E_Mail:Email,
+      // Phone_Number:Phone,
+      
+    }).then(()=>{
       alert('successful insert');
       // if(response.data.message){
       //   setloginstatus(response.data.message)
@@ -109,6 +113,11 @@ export default function Review1() {
       //   setloginstatus(response.data[0].Login_ID);
       // }
     });
+    }else{
+      alert("데이터입력이 틀렸습니다.");
+    }
+    // alert("hi");
+    
   };
   useEffect(()=>{
     Axios.get('http://localhost:5000/mypage').then((response)=>{
@@ -301,8 +310,8 @@ export default function Review1() {
                     color="primary"
                     className={classes.submit}
                     className={classes.button}
-                    onClick = {submitInfo}
-                    href='/'
+                    onClick = {submitInfo1}
+                    // href='/'
                   >
                     수정하기
                   </Button>

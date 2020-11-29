@@ -9,11 +9,9 @@ const cors= require('cors');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-// const router = express.Router();
+
 var router = express.Router();
-// router.use(function(req,res,next){
-//     console.log(req.url,"@",Date.now());
-// });
+
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -48,13 +46,24 @@ router.use(session({
     },
 }));
 
+router
+    .get("/",(req,res)=>{
+        console.log('세션 정보 확인')
+    if(req.session.user){
+        console.log('세션 존재')
+        res.send({permission:true,user:req.session.user});
+        
+    }else{
+        console.log('세션 없음')
+        res.send({permission:false});
+    }
+});
 
+// router.get("/",(req,res)=>{
 
-// router.get("/mypage",(req,res)=>{
-
-//     const Login_ID = req.body.ID,
-//     const E_Mail=req.body.Email,
-//     const Phone_Number=req.body.Phone,
+//     // const Login_ID = req.body.ID,
+//     // const E_Mail=req.body.Email,
+//     // const Phone_Number=req.body.Phone,
 //     //로그인되어있는지 확인
    
 //         if(req.session.user){
@@ -73,46 +82,68 @@ router.use(session({
 // });
 
 //card table에 insert 
-router.post('/', (req,res)=>{
+router.post('/', async (req,res)=>{
 
-    
-    // if(req.session.user){
-    //     console.log(req.session.user[0].Customer_ID);
-    // }else{
-    //     console.log("no"+res);
-    // }
-    // res.send();
 
-    // const get = "SELECT COUNT (Customer_ID) as cid FROM Customer;"
-    
-    const BIN_Number=req.body.card_bin;
-    const CVC=req.body.card_cvc;
-    const Validity=req.body.card_validity;
-    const Card_Password=req.body.card_password;
-    const  Card_Serial= req.body.card_serial;
-    const sqlInsert = "INSERT INTO Card (Card_Serial,BIN_Number,Customer_ID,CVC,Validity,Card_Password) VALUES (?,?,'" + (Customer_ID) + "',?,?,?);"
     let Customer_ID=req.session.user[0].Customer_ID;
+    let body = req.body;
 
-    db.query(
-        sqlInsert,
-        (err,result)=>{
-            console.log(result);
-            bcrypt.hash(Card_Password,saltRounds,(err,hash)=>{
+    const q= "INSERT INTO Card (BIN_Number,Card_Serial,Customer_ID,CVC,Validity,Card_Password) VALUES (?,?,'" + (Customer_ID) + "',?,?,?);"
+
+    let pwEncrpt = async() => {
+        console.log('카드비번 암호화 시작');
+        await bcrypt.genSalt(saltRounds,async(err,salt)=>{
+            await bcrypt.hash(req.body.card_password,salt,async(err,hash)=>{
+                console.log('비번 암호화 완료');
+                let value = await makeValue(hash);
+                let pushdb = await dbInsert(q,value);
+            });
+        });
+    };
+    let dbInsert = async (q, value)=>{
+        console.log('db에 쿼리 입력');
+        db.query(
+            q,
+            value,
+            (err,rows,fields)=>{
             if(err){
                 console.log(err);
-            }        
-        
-            db.query( 
-                sqlInsert,
-                [Card_Serial,BIN_Number,CVC,Validity,Card_Password],
-                (err,result)=>{
-                    // console.log(First_Name+""+Last_Name+""+E_Mail+" "+Login_PW);
-                    console.log(err);
-                });
-            
-        });
+            }else{
+                console.log('등록완료');
+                res.send(rows);
+            }
 
-    });
+        });
+    };
+    let makeValue= async (sp)=>{
+        console.log('암호화된 비번으로 갱신');
+        req.body.card_password = sp;
+        return Object.values(body);
+    };
+
+    let ret = await pwEncrpt();
+
+    // db.query(
+    //     "INSERT INTO Card (Card_Serial,BIN_Number,Customer_ID,CVC,Validity,Card_Password) VALUES (?,?,'" + (Customer_ID) + "',?,?,?);"
+    //     ,
+    //     (err,result)=>{
+    //         console.log(result);
+    //         bcrypt.hash(Card_Password,saltRounds,(err,hash)=>{
+    //         if(err){
+    //             console.log(err);
+    //         }        
+        
+    //         db.query( 
+    //             sqlInsert,
+    //             [Card_Serial,BIN_Number,CVC,Validity,Card_Password],
+    //             (err,result)=>{
+    //                 // console.log(First_Name+""+Last_Name+""+E_Mail+" "+Login_PW);
+    //                 console.log(err);
+    //             });
+            
+    //     });
+
+    // });
 
 });
 module.exports = router;

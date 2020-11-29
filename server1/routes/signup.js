@@ -42,7 +42,9 @@ router.use(cors({
 router.get('/',function (req,res,next){
     res.send('respond with a resource');
 });
+
 var date = new Date();
+
 router
 .post('/', (req,res)=>{
     const Login_ID = req.body.Login_ID;
