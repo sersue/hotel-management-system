@@ -16,6 +16,8 @@ import Link from '@material-ui/core/Link';
 const inform = [ {ID:'123', name:'KIM HA NA', Email:'qwe@naver.com', Phone:'010-1234-1234', card_bin:"XXXX-XX", 
 card_serial:"XX-XXXX-XXXX", card_cvc:"000",card_validity:"00/00",card_password:"0000"} ];
 
+// db에서 mypage관련데이터 배열 불러오기 
+// const inform1 = [{card_bin:,card_serial:,card_cvc:,card_validity:,card_password:}];
 
 function Copyright() {
   return (
@@ -86,10 +88,8 @@ export default function Review1() {
   const [card_validity,setcard_validity] = useState('');
   const [card_password,setcard_password] = useState('');
   const [card_serial,setcard_serial]=useState('');
-
-  const [loginstatus,setloginstatus] = useState('');
+  
  
-
   const submitInfo1 = () => {
     if(card_bin!=null&&card_cvc!=null&&card_validity!=null&&card_password!=null&&card_serial!=null){
       Axios.post('http://localhost:5000/mypage',{
@@ -100,25 +100,22 @@ export default function Review1() {
       Validity:card_validity,
       Card_Password:card_password,
       
-      // Login_ID:ID,
-      // E_Mail:Email,
-      // Phone_Number:Phone,
-      
-    }).then(()=>{
-      alert('successful insert');
-      // if(response.data.message){
-      //   setloginstatus(response.data.message)
-      // }
-      // else{
-      //   setloginstatus(response.data[0].Login_ID);
+    }).then((res)=>{
+      if(res.data.result){
+        alert('데이터 수정 성공!');
+      }
+      // console.log(response.data.user[0]);
+      // if(response){
+      //   const inform1 = request.session.user[0];
+      //   alert(inform1);
       // }
     });
     }else{
-      alert("데이터입력이 틀렸습니다.");
-    }
-    // alert("hi");
+      alert("데이터 수정이 되지않았습니다.");
+    }}
     
-  };
+
+    
   useEffect(()=>{
     Axios.get('http://localhost:5000/mypage').then((response)=>{
       // if(response.data.loggedIn == true){
@@ -128,7 +125,7 @@ export default function Review1() {
     }); //get : refresh 하면 login in or not 
 
   },[]);
-
+  
   return (
     <React.Fragment>
       <CssBaseline />
@@ -311,6 +308,7 @@ export default function Review1() {
                     className={classes.submit}
                     className={classes.button}
                     onClick = {submitInfo1}
+                    
                     // href='/'
                   >
                     수정하기

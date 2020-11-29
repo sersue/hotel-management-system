@@ -64,45 +64,32 @@ router
     const Membership_Due_Date=getFormatDate(date);
     const Nationality = req.body.Nationality;
     const Birthday= req.body.Birthday;
-   const Gender = req.body.Gender;
-    let count;
-    const get = "SELECT COUNT (Inform_ID) as cnt FROM Information;"
-
+    const Gender = req.body.Gender;
+    const sqlInsert2 = "INSERT INTO Information(First_Name,Last_Name,E_Mail,Phone_Number,Zip,Apt_Num,Fax,Nationality,Birthday,Gender) VALUES (?,?,?,?,32164,?,?,?,?,?);"
     db.query(
-        get,
+        sqlInsert2,
+        [First_Name,Last_Name,E_Mail,Phone_Number,Apt_Num,Fax,Nationality,Birthday,Gender],
         (err,result)=>{
-            count = result[0].cnt;
-            console.log(result);
+            console.log(result.insertId);
+            const inserid =result.insertId;
+            const sqlInsert = "INSERT INTO Customer (Login_ID,Login_PW,Inform_ID,Rank,Validity_Month,Mileage,Reg_Date,Membership_Due_Date) VALUES (?,?,?,?,?,?,?,?);"
 
-            console.log("aaa " + count);
-            // console.log("bbb " + count);
-            const sqlInsert = "INSERT INTO Customer (Login_ID,Login_PW,Inform_ID,Rank,Validity_Month,Mileage,Reg_Date,Membership_Due_Date) VALUES (?,?,'" + (count+1) + "',?,?,?,?,?);"
-            // console.log("ccc " + count);
-            const sqlInsert2 = "INSERT INTO Information(First_Name,Last_Name,Inform_ID,E_Mail,Phone_Number,Zip,Apt_Num,Fax,Nationality,Birthday,Gender) VALUES (?,?,'" + (count+1) + "',?,?,32164,?,?,?,?,?);"
-            
-            
             bcrypt.hash(Login_PW,saltRounds,(err,hash)=>{
                 if(err){
                     console.log(err);
                 }        
                 console.log(hash);
-                db.query(
-                    sqlInsert2,
-                    [First_Name,Last_Name,E_Mail,Phone_Number,Apt_Num,Fax,Nationality,Birthday,Gender],
-                    (err,result)=>{
-                        console.log(First_Name+""+Last_Name+""+E_Mail+" "+Login_PW);
-                        console.log(err);
-                    });
                 db.query( 
                     sqlInsert,
-                    [Login_ID,hash,Rank,Validity_Month,Mileage,Reg_Date,Membership_Due_Date],
+                    [Login_ID,hash,inserid,Rank,Validity_Month,Mileage,Reg_Date,Membership_Due_Date],
                     (err,result)=>{
-                        console.log(First_Name+""+Last_Name+""+E_Mail+" "+Login_PW);
                         console.log(err);
+                        console.log(result);
+                        
                     });
                 
             });
-
+            res.send({result:true});
         });
     
 

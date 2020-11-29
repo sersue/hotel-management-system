@@ -85,10 +85,12 @@ export default function SignUp() {
         Fax:Fax,
         Nationality:Nationality.label,
         Gender:Gender
-      }).then(()=>{
-        alert('successful insert');
+      }).then((res)=>{
+        if(res.data.result){
+          document.location.href='/login'
+          alert('회원가입 성공');
+        }
       });
-
       
     }else{
       alert("데이터입력이 틀렸습니다.");
@@ -106,6 +108,7 @@ export default function SignUp() {
   },[]);
 
   return (
+
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -286,7 +289,7 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Button
-            type=""
+            //type="submit"
             fullWidth
             variant="contained"
             color="primary"

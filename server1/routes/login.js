@@ -52,7 +52,7 @@ router.use(session({
 
 
 
-// });
+
 
 router
     .get("/",(req,res)=>{
@@ -69,6 +69,7 @@ router
     const Login_ID = req.body.Login_ID;
     const Login_PW = req.body.Login_PW;
     const sqlSelect = "SELECT * FROM Customer WHERE Login_ID = ?;"
+
     db.query(
         sqlSelect,
         Login_ID,
@@ -86,9 +87,6 @@ router
                        req.session.user=result;
                        console.log(req.session.user);
                        console.log(req.session.user[0].Customer_ID);
-
-                      
-
                       
                        res.send(result);
                    }else{

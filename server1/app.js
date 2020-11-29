@@ -23,6 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
   key:"user",
   secret:"abc",
@@ -54,6 +55,18 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.get("/",(req,res)=>{
+        console.log('세션 정보 확인')
+    if(req.session.user){
+        console.log('세션 존재')
+        res.send({loggedin:true,user:req.session.user});
+        
+    }else{
+        console.log('세션 없음')
+        res.send({loggedin:false});
+    }
 });
 
 module.exports = app;
