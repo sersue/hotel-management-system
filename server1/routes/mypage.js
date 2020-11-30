@@ -57,7 +57,20 @@ router
             (err,result) =>{
                 console.log(result[0]);
                 console.log(err);
-                res.send({Login_ID: 'cndgh',Name:result[0].First_Name+result[0].Last_Name, E_Mail:result[0].E_Mail,Phone_Number:result[0].Phone_Number})
+                const qcard = `select Card_Serial,BIN_Number,CVC from Card where Customer_ID = ${req.session.user[0].Customer_ID}`
+                db.query(
+                    qcard,
+                    (err,result2)=>{
+                        console.log(result2);
+                        console.log(err);
+                        if (result2) {
+                            res.send({Login_ID: req.session.user[0].Login_ID,Name:result[0].First_Name+result[0].Last_Name, E_Mail:result[0].E_Mail,Phone_Number:result[0].Phone_Number,havecard:true,Card:result2})
+                        }else{
+                            res.send({Login_ID: req.session.user[0].Login_ID,Name:result[0].First_Name+result[0].Last_Name, E_Mail:result[0].E_Mail,Phone_Number:result[0].Phone_Number ,havecard:false})
+                        }
+
+                    }
+                )
             }
         )
         console.log(q);

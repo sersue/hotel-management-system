@@ -38,6 +38,15 @@ function Navbar() {
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='nav-item'>
               <Link
+                to='/description'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                방소개
+              </Link>
+            </li>
+          <li className='nav-item'>
+              <Link
                 to='/reservation'
                 className='nav-links'
                 onClick={closeMobileMenu}

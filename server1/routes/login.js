@@ -79,8 +79,10 @@ router
             if(result.length > 0){
                bcrypt.compare(Login_PW,result[0].Login_PW,function(error,response){
                    if(response){
-                       req.session.user=result;                      
+                       req.session.user=result;   
+                       console.log("로그인");                   
                        res.send({result:true,user:result});
+                       
                    }else{
                         console.log("wrong Login_ID/Login_PW combination");
                         res.send({result:false,messages:"Wrong Login_ID/Login_PW combination"});
