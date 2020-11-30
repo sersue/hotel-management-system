@@ -83,6 +83,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700],
   },
+
+  cardBox: {
+    padding: theme.spacing(1,1,1),
+    textAlign: 'center',
+  }
 }));
 
 export default function Review1() {
@@ -119,6 +124,7 @@ export default function Review1() {
       }).then((res) => {
         if (res.data.result) {
           alert('데이터 수정 성공!');
+          document.location.href='/mypage'
         }
       });
     } else {
@@ -134,7 +140,8 @@ export default function Review1() {
 
       }).then((res) => {
         if (res.data.isok) {
-          alert('데이터 수정 성공!');
+          alert('비밀번호 변경완료!');
+          document.location.href='/mypage'
         }else{
           alert(res.data.messages);
         }
@@ -143,9 +150,20 @@ export default function Review1() {
       alert("동일한 번호로 변경 안됨");
     }
   }
+  const submitInfo3 = ({card}) => {
+    console.log(card);
+    Axios.post('http://localhost:5000/mypage/carddel', {
+      Card_Serial : card.Card_Serial,
+    }).then((res) => {
+      if (res.data.isok) {
+        alert('카드 삭제');
+        document.location.href='/mypage'
+      }
+    });
+  }
   function mycards() {
     return (
-      <Grid container spacing={5} alignItems="flex-end">
+      <Grid container spacing={6} alignItems="flex-end" className={classes.cardBox}>
         {mycard.map((card) => (
           <Grid item xs={12} sm={6} md={6}>
             <Card>
@@ -158,6 +176,11 @@ export default function Review1() {
                   CVC    : {card.CVC}
                 </Typography>
               </CardContent>
+              <CardActions >
+                  <Button fullWidth variant={'outlined'} color="primary" onClick={()=>submitInfo3({card})}>
+                     삭제
+                  </Button>
+                </CardActions>
             </Card>
           </Grid>
         ))}
@@ -171,7 +194,7 @@ export default function Review1() {
         <Grid item xs={5}>
           카드 앞 6자리
                 <TextField
-            defaultValue={"xxxx-xx"}
+            label={"xxxx-xx"}
             variant="outlined"
             required
             fullWidth
@@ -186,7 +209,7 @@ export default function Review1() {
         <Grid item xs={5}>
           카드 뒷 6자리
                 <TextField
-            defaultValue={"xx-xxxx-xxxx"}
+            label={"xx-xxxx-xxxx"}
             variant="outlined"
             required
             fullWidth
@@ -202,7 +225,7 @@ export default function Review1() {
         <Grid item xs={3}>
           CVC 번호
             <TextField
-            defaultValue={"xxx"}
+            label={"xxx"}
             variant="outlined"
             required
             fullWidth
@@ -218,7 +241,7 @@ export default function Review1() {
         <Grid item xs={10}>
           유효기간(달/년도)
       <TextField
-            defaultValue={"MM/YY"}
+            label={"MM/YY"}
             variant="outlined"
             required
             fullWidth
@@ -369,8 +392,10 @@ export default function Review1() {
               비밀번호 변경
             </Button>):infoadd()}
 
-
-            {iscardhave ? mycards() : ''}
+            <div className={classes.cardBox}>
+             {iscardhave ? mycards() : ''}
+            </div>
+            
 
             {!cardbuttononclick?(<Button
               type="submit"

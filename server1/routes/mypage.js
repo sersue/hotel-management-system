@@ -160,7 +160,26 @@ router.post('/pw', (req,res)=>{
 });
 
 
+//card table에 insert 
+router.post('/carddel', (req,res)=>{
 
+    const Card_Serial = req.body.Card_Serial;
+
+    const q= `DELETE FROM Card WHERE Card_Serial=${Card_Serial}`
+     db.query(
+         q,
+         (err,result) => {
+             if (err) {
+                 console.log(err);
+             }
+             res.send({isok:true});
+         }
+     )
+   
+
+    
+
+});
         
 
    
