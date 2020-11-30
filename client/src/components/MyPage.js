@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   button: {
+    padding: theme.spacing(1, 1,1),
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
@@ -75,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 8,
   },
   TextlistItem: {
-    padding: theme.spacing(1, 0),
+    padding: theme.spacing(1, 1,1),
     padding: 20,
   },
   cardHeader: {
@@ -94,14 +95,17 @@ export default function Review1() {
   const [Phone, setPhone] = useState('');
   const [mycard, setmycard] = useState();
   const [iscardhave, setiscardhave] = useState(false);
+  const [Customer_ID, setCustomer_ID] = useState('');
 
   const [card_bin, setcard_bin] = useState('');
   const [card_cvc, setcard_cvc] = useState('');
   const [card_validity, setcard_validity] = useState('');
   const [card_password, setcard_password] = useState('');
   const [card_serial, setcard_serial] = useState('');
-
+  const [userPW, setuserPW] = useState('');
+  const [newPW, setnewPW] = useState('');
   const [cardbuttononclick,setcardbuttononclick] = useState(false);
+  const [infobuttononclick,setinfobuttononclick] = useState(false);
   const submitInfo1 = () => {
     if (card_bin != null && card_cvc != null && card_validity != null && card_password != null && card_serial != null) {
       Axios.post('http://localhost:5000/mypage', {
@@ -121,7 +125,24 @@ export default function Review1() {
       alert("데이터 수정이 되지않았습니다.");
     }
   }
+  const submitInfo2 = () => {
+    if (newPW != userPW) {
+      Axios.post('http://localhost:5000/mypage/pw', {
+        UserPW : userPW,
+        NewPW : newPW,
+        Customer_ID:Customer_ID,
 
+      }).then((res) => {
+        if (res.data.isok) {
+          alert('데이터 수정 성공!');
+        }else{
+          alert(res.data.messages);
+        }
+      });
+    } else {
+      alert("동일한 번호로 변경 안됨");
+    }
+  }
   function mycards() {
     return (
       <Grid container spacing={5} alignItems="flex-end">
@@ -180,7 +201,7 @@ export default function Review1() {
         </Grid>
         <Grid item xs={3}>
           CVC 번호
-                <TextField
+            <TextField
             defaultValue={"xxx"}
             variant="outlined"
             required
@@ -240,8 +261,59 @@ export default function Review1() {
       </Grid>
     )
   }
+  function infoadd() {
+    return (
+      <Grid container spacing={2} className={classes.TextlistItem}>
+        <Grid item xs={6}>
+          현재 비밀번호
+            <TextField
+            variant="outlined"
+            required
+            fullWidth
+            name="Current_Password"
+            type="password"
+            id="Current_Password"
+            autoComplete="current-bin"
+            onChange={(e) => {
+              setuserPW(e.target.value);
+            }}
+          /></Grid>
+        <Grid item xs={6}>
+          변경할 비밀번호
+                <TextField
+            variant="outlined"
+            required
+            fullWidth
+            name="Next_password"
+            type="password"
+            id="Next_password"
+            autoComplete="current-serial"
+            onChange={(e) => {
+              setnewPW(e.target.value);
+            }}
+          />
+        </Grid>
+
+        <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              className={classes.button}
+              onClick={submitInfo2}
+              //href='mypage'
+            >
+              변경하기
+            </Button>
+      </Grid>
+    )
+  }
   const cardaddbutton = () =>{
     setcardbuttononclick(true);
+  }
+  const infoaddbutton = () =>{
+    setinfobuttononclick(true);
   }
   const [user, setuser] = useState(null);
   useEffect(() => {
@@ -253,7 +325,7 @@ export default function Review1() {
       setEmail(response.data.E_Mail);
       setiscardhave(response.data.havecard);
       setPhone(response.data.Phone_Number);
-
+      setCustomer_ID(response.data.Customer_ID);
 
     });
 
@@ -283,43 +355,33 @@ export default function Review1() {
             </ListItem>
 
             Phone Number
+            <ListItem className={classes.listItem} >
+              <ListItemText primary={Phone} />
+            </ListItem>
+            {!infobuttononclick?(<Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={()=>infoaddbutton()}
+            >
+              비밀번호 변경
+            </Button>):infoadd()}
 
-          <Grid container spacing={2} className={classes.TextlistItem}>
-              <Grid item xs={10}>
-                <TextField
-                  defaultValue={"Phone"}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="Phone"
-                  type="Phone"
-                  id="Phone"
-                  autoComplete="current-Phone"
-                  onChange={(e) => {
-                    setPhone(e.target.value);
-                  }}
-                /></Grid>
-            </Grid>
+
             {iscardhave ? mycards() : ''}
+
             {!cardbuttononclick?(<Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
               className={classes.button}
               onClick={()=>cardaddbutton()}
             >
               카드 추가
             </Button>):cardadd()}
-
-
-
-
-
-            
-
-
 
           </List>
         </Paper>

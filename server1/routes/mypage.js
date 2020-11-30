@@ -61,12 +61,12 @@ router
                 db.query(
                     qcard,
                     (err,result2)=>{
-                        console.log(result2);
+                        console.log(result);
                         console.log(err);
                         if (result2) {
-                            res.send({Login_ID: req.session.user[0].Login_ID,Name:result[0].First_Name+result[0].Last_Name, E_Mail:result[0].E_Mail,Phone_Number:result[0].Phone_Number,havecard:true,Card:result2})
+                            res.send({Customer_ID:req.session.user[0].Customer_ID,Login_ID: req.session.user[0].Login_ID,Name:result[0].First_Name+result[0].Last_Name, E_Mail:result[0].E_Mail,Phone_Number:result[0].Phone_Number,havecard:true,Card:result2})
                         }else{
-                            res.send({Login_ID: req.session.user[0].Login_ID,Name:result[0].First_Name+result[0].Last_Name, E_Mail:result[0].E_Mail,Phone_Number:result[0].Phone_Number ,havecard:false})
+                            res.send({Customer_ID:req.session.user[0].Customer_ID,Login_ID: req.session.user[0].Login_ID,Name:result[0].First_Name+result[0].Last_Name, E_Mail:result[0].E_Mail,Phone_Number:result[0].Phone_Number ,havecard:false})
                         }
 
                     }
@@ -111,6 +111,51 @@ router.post('/', (req,res)=>{
         
     });
     
+
+});
+
+// 비밀번호 변경
+router.post('/pw', (req,res)=>{
+
+    const Customer_ID=req.body.Customer_ID;
+    const UserPW = req.body.UserPW;
+    const NewPW = req.body.NewPW;
+    const sqlSelect = `SELECT * FROM Customer WHERE Customer_ID = ${Customer_ID}`
+    db.query(
+        sqlSelect,
+        (err,result)=>{
+            if(result.length > 0){
+                bcrypt.compare(UserPW,result[0].Login_PW,(error,response)=>{
+                    if (error) {
+                        console.log(error);
+                    }
+                    if(response){
+                        
+                         bcrypt.hash(NewPW,saltRounds,(err2,hash)=>{
+                            if (err2) {
+                                console.log(err);
+                            }
+                            const sqlq = `UPDATE Customer SET Login_PW ='${hash}' where Customer_ID=${Customer_ID}`;
+                            db.query(
+                                sqlq,
+                                (err3,result2)=>{
+                                    if (err3) {
+                                        console.log(err3)
+                                    }
+                                    console.log(result2);
+                                    console.log("비밀번호 변경")
+                                    res.send({isok:true});
+                                }
+                            )
+                         })
+                    }else{
+                        res.send({isok:false,messages:"현재 비밀번호가 틀렸습니다."});
+                    }
+                });
+            }
+        }
+
+    )    
 
 });
 
