@@ -50,7 +50,7 @@ export default function Review({ CheckIn, CheckOut, Adult, Kid, PriceWon ,RoomNu
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Check IN : {CheckOut}
+            Check OUT : {CheckOut}
           </Typography>
         </Grid>
       </Grid>

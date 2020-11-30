@@ -103,8 +103,9 @@ export default function Checkout() {
   const getPriceWon = (date) => setPriceWon(date);
   const getRoomNumber = (date) => setRoomNumber(date);
   const getRoomType = (date) => setRoomType(date);
-  const getPayDate= (date)=> setPayDate(date);
   
+  // const getPayDate= (date)=> setPayDate(date);
+
   let today = new Date();  
   const [activeStep, setActiveStep] = React.useState(0);
 

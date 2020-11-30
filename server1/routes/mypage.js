@@ -22,8 +22,6 @@ const db= mysql.createConnection({
         "password": "1234",
         "port": "13333",
         "database": "sonson"
-      
-      
 });
 
 router.use(cors({
@@ -53,8 +51,16 @@ router
 
     if(req.session.user){
         console.log('세션 존재')
-        res.send({permission:true,user:req.session.user});
-        
+        const q = `select First_Name,Last_Name,E_Mail ,Phone_Number from Information where Inform_ID= '${req.session.user[0].Inform_ID}'`
+        db.query(
+            q,
+            (err,result) =>{
+                console.log(result[0]);
+                console.log(err);
+                res.send({Login_ID: 'cndgh',Name:result[0].First_Name+result[0].Last_Name, E_Mail:result[0].E_Mail,Phone_Number:result[0].Phone_Number})
+            }
+        )
+        console.log(q);
     }else{
         console.log('세션 없음')
         res.send({permission:false});

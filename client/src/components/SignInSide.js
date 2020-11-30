@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Axios from 'axios'
-// npm i @material-ui/core --save 필요시
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -12,11 +11,9 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-//npm install @material-ui/icons
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-// import login from './login';
-// import { Redirect } from "react-router-dom";
+
 
 function Copyright() {
   return (
@@ -73,31 +70,23 @@ export default function SignInSide() {
     Axios.post('http://localhost:5000/login',{ // post : login input 하는 페이지 (login router 1)
       Login_ID:userid, 
       Login_PW:password
-    }).then(()=>{
-      alert('successful insert');
+    }).then((response)=>{
+      if (response.data.result) {
+        console.log("로그인 성공");
+        document.location.href='/'
+      }else{
+        alert(response.data.messages);
+      }
+      
+      
     });
   };
 
   useEffect(()=>{
     Axios.get('http://localhost:5000/login').then((response)=>{
-      // if(response.data.loggedIn == true){
-        
-      // }
-      console.log(response); //login 되면 console loggedin 값 true
-    }); //get : refresh 하면 login in or not 
-
+    }); 
   },[]);
-    
-  //   // Axios.post('http://localhost:5000/api/insert',{
-  //   //   email:email, 
-  //   //   password:password
-  //   // }).then(()=>{
-  //   //   alert('successful insert');
-  //   // });
-  // };
 
-  //const { from } = location.state || { from: { pathname: "/" } };
-  //if (authenticated) return <Redirect to={from} />;
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -145,7 +134,6 @@ export default function SignInSide() {
               label="Remember me"
             />
             <Button
-              // type="submit"
               fullWidth
               variant="contained"
               color="primary"
@@ -176,4 +164,3 @@ export default function SignInSide() {
     </Grid>
   );
 }
-

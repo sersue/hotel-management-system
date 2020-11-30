@@ -27,7 +27,6 @@ const db= mysql.createConnection({
         "port": "13333",
         "database": "sonson"
       
-      
 });
 
 router.use(cors({
@@ -77,26 +76,19 @@ router
             if(err){
                 res.send({err:err});
             }
-            // console.log(result);
-            // console.log(result[0].Login_PW);
-            // console.log(Login_PW);
-
             if(result.length > 0){
                bcrypt.compare(Login_PW,result[0].Login_PW,function(error,response){
                    if(response){
-                       req.session.user=result;
-                       console.log(req.session.user);
-                       console.log(req.session.user[0].Customer_ID);
-                      
-                       res.send(result);
+                       req.session.user=result;                      
+                       res.send({result:true,user:result});
                    }else{
                         console.log("wrong Login_ID/Login_PW combination");
-                        res.send({messages:"Wrong Login_ID/Login_PW combination"});
+                        res.send({result:false,messages:"Wrong Login_ID/Login_PW combination"});
                    }
                });            
             }else{
                 console.log("User doesn't exist");
-                res.send({messages:"User doesn't exist"});
+                res.send({result:false,messages:"User doesn't exist"});
             }
         }
     );

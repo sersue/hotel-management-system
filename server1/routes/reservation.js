@@ -43,6 +43,19 @@ router.use(session({
     },
 }));
 
+
+
+function getFormatDate(date){
+    var year = date.getFullYear();              //yyyy
+    var month = (1 + date.getMonth());          //M
+    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+    var day = date.getDate();                   //d
+    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+    return  year + '-' + month + '-' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+}
+
+var date = new Date();
+
 router.get('/',function (req,res,next){
     res.send('respond with a resource');
 });
@@ -56,7 +69,7 @@ router.post('/',(req,res)=>{
       const Check_Out =req.body.Check_Out;
       const Adult  =req.body.Adult;
       const Child  =req.body.Child;
-      const Pay_Date = req.body.Pay_Date;
+      const Pay_Date = getFormatDate(date);
       const Pay_Type  ='Card';  
      
       const sqlInsert = "INSERT INTO Reservation(Room_Num,Hotel_ID,Customer_ID,Price_Won,Check_In,Check_Out,Adult,Child,Pay_Date,Pay_Type) VALUES (?,?,'" + (Customer_ID) + "',?,?,?,?,?,?,?);"
