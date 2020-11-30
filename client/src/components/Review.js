@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Review({ CheckIn, CheckOut, Adult, Kid, PriceWon ,RoomNumber}) {
+export default function Review({ CheckIn, CheckOut, Adult, Kid, PriceWon ,RoomNumber, Getpricewon}) {
   const classes = useStyles();
   let Totalprice=0;
   const products = [];
@@ -36,7 +36,7 @@ export default function Review({ CheckIn, CheckOut, Adult, Kid, PriceWon ,RoomNu
     products.push({name: RoomNumber[i], desc: '정보', price:100*(i+1)});
     Totalprice += 100*(i+1);
   }
-
+  Getpricewon(Totalprice);
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>

@@ -71,11 +71,11 @@ function getStepContent(step,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon
     case 0:
       return <CheckInOutform GetCheakIN = {getCheckIn} GetCheakOUT= {getCheckOut} GetAdult= {getAdult} GetKid= {getKid}/>;
     case 1:
-      return <RoomTypeform GetPriceWon={getPriceWon} GetRoomType={getRoomType}/>;
+      return <RoomTypeform />;
     case 2:
       return <SelectRoom Getroomnuber={getRoomNumber} UserSelectRoomType={RoomType}/>;
     case 3:
-      return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon} RoomNumber={RoomNumber}/>;  
+      return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon} RoomNumber={RoomNumber} Getpricewon={getPriceWon}/>;  
     default:
       throw new Error('Unknown step');
   }
@@ -104,7 +104,6 @@ export default function Checkout() {
   const getRoomNumber = (date) => setRoomNumber(date);
   const getRoomType = (date) => setRoomType(date);
   
-  // const getPayDate= (date)=> setPayDate(date);
 
   let today = new Date();  
   const [activeStep, setActiveStep] = React.useState(0);
