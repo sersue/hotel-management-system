@@ -103,6 +103,8 @@ export default function Checkout() {
   const getPriceWon = (date) => setPriceWon(date);
   const getRoomNumber = (date) => setRoomNumber(date);
   const getRoomType = (date) => setRoomType(date);
+  const getPayDate= (date)=> setPayDate(date);
+  
   let today = new Date();  
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -116,7 +118,7 @@ export default function Checkout() {
 
   const submitInfo = () => {
     setActiveStep(activeStep + 1);
-    Axios.post('http://localhost:5000/signup',{
+    Axios.post('http://localhost:5000/reservation',{
       Check_In :CheckIn,
       Check_Out :CheckOut,
       Price_Won :PriceWon,
@@ -125,14 +127,19 @@ export default function Checkout() {
       Pay_Type: 'Card',
       Room_Num: RoomNumber,
       Pay_Date: (today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()),
-    }).then(()=>{
-      alert('successful insert');
+    }).then((res)=>{
+      if(res.data.result){
+        alert('예약 성공!');
+      }
+      else{
+        alert("예약에 실패했습니다");
+      }
     });
   };
   
 
   useEffect(()=>{
-    Axios.get('http://localhost:5000/login').then((response)=>{
+    Axios.get('http://localhost:5000/reservation').then((response)=>{
       // if(response.data.loggedIn == true){
         
       // }
@@ -184,6 +191,7 @@ export default function Checkout() {
                     variant="contained"
                     color="primary"
                     className={classes.button}
+                    
                     onClick = {activeStep === steps.length - 1 ? submitInfo : handleNext}
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}

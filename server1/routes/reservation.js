@@ -43,11 +43,40 @@ router.use(session({
     },
 }));
 
-router.get('/',(req,res)=>{
-
-
-
+router.get('/',function (req,res,next){
+    res.send('respond with a resource');
 });
 
+router.post('/',(req,res)=>{
+    const Room_Num  = 208;
+      const Hotel_ID = 1;
+      let Customer_ID=req.session.user[0].Customer_ID;
+      const Price_Won  =req.body.Price_Won;
+      const Check_In =req.body.Check_In;
+      const Check_Out =req.body.Check_Out;
+      const Adult  =req.body.Adult;
+      const Child  =req.body.Child;
+      const Pay_Date = req.body.Pay_Date;
+      const Pay_Type  ='Card';  
+     
+      const sqlInsert = "INSERT INTO Reservation(Room_Num,Hotel_ID,Customer_ID,Price_Won,Check_In,Check_Out,Adult,Child,Pay_Date,Pay_Type) VALUES (?,?,'" + (Customer_ID) + "',?,?,?,?,?,?,?);"
+    db.query(
+        sqlInsert,
+        [Room_Num,Hotel_ID,Price_Won,Check_In,Check_Out,Adult,Child,Pay_Date,Pay_Type],
+        (err,result)=>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                console.log(err);
+                console.log(result);
+                res.send({result:true});
+            }        
+        }
+    )
+     
+     
 
+      
+});
 module.exports = router;
