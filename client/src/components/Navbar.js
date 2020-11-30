@@ -3,7 +3,7 @@ import { Button1 } from './Button';
 import { Button2 } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-
+import Axios from 'axios'
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
@@ -21,6 +21,7 @@ function Navbar() {
 
   useEffect(() => {
     showButton();
+
   }, []);
 
   window.addEventListener('resize', showButton);

@@ -61,33 +61,50 @@ router.get('/',function (req,res,next){
 });
 
 router.post('/',(req,res)=>{
-    const Room_Num  = 208;
-      const Hotel_ID = 1;
-      let Customer_ID=req.session.user[0].Customer_ID;
-      const Price_Won  =req.body.Price_Won;
-      const Check_In =req.body.Check_In;
-      const Check_Out =req.body.Check_Out;
-      const Adult  =req.body.Adult;
-      const Child  =req.body.Child;
-      const Pay_Date = getFormatDate(date);
-      const Pay_Type  ='Card';  
-     
-      const sqlInsert = "INSERT INTO Reservation(Room_Num,Hotel_ID,Customer_ID,Price_Won,Check_In,Check_Out,Adult,Child,Pay_Date,Pay_Type) VALUES (?,?,'" + (Customer_ID) + "',?,?,?,?,?,?,?);"
-    db.query(
-        sqlInsert,
-        [Room_Num,Hotel_ID,Price_Won,Check_In,Check_Out,Adult,Child,Pay_Date,Pay_Type],
-        (err,result)=>{
-            if(err){
-                console.log(err);
+    console.log(req.body);
+    const Room_Num  = req.body.Room_Num;
+    const Hotel_ID = 1;
+    const Customer_ID=req.session.user[0].Customer_ID;
+    const Price_Won  =req.body.Price_Won;
+    const Check_In =req.body.Check_In;
+    const Check_Out =req.body.Check_Out;
+    const Adult  =req.body.Adult;
+    const Child  =req.body.Child;
+    const Pay_Date = getFormatDate(date);
+    const Pay_Type  =req.body.Pay_Type;
+    
+    const sqlInsert2 = `INSERT INTO Reservation(Room_Num,Hotel_ID,Customer_ID,Price_Won,Check_In,Check_Out,Adult,Child,Pay_Date,Pay_Type) VALUES (?,?,${Customer_ID},?,?,?,?,?,?,?);`
+    const sqlInsert1 = `SELECT Price_won FROM Room natural join Room_Type where Room_Num=(?)`
+    {Room_Num.map((roomnum)=>(
+        db.query(
+            sqlInsert1,
+            roomnum,
+            (err1,result1)=>{
+                if(err1){
+                    console.log(err1);
+                }
+                else{
+                    console.log(result1);
+                    db.query(
+                        sqlInsert2,
+                        [roomnum,Hotel_ID,result1[0].Price_won,Check_In,Check_Out,Adult,Child,Pay_Date,Pay_Type],
+                        (err2,result2)=>{
+                            if(err2){
+                                console.log(err2);
+                            }
+                            else{
+                                console.log(err2);
+                                console.log(result2);
+
+                            }        
+                        }
+                    )
+                }        
             }
-            else{
-                console.log(err);
-                console.log(result);
-                res.send({result:true});
-            }        
-        }
-    )
-     
+        )
+
+    ))}
+    res.send({isok:true});
      
 
       

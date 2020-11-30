@@ -84,16 +84,16 @@ function getStepContent(step,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon
 export default function Checkout() {
   Axios.defaults.withCredentials = true; // for cookie
   const classes = useStyles();
-  const [CheckIn,setCheckIn]=useState('');
-  const [CheckOut,setCheckOut]=useState('');
-  const [Adult,setAdult] = useState('');
-  const [Kid,setKid] = useState('');
+  const [CheckIn,setCheckIn]=useState(null);
+  const [CheckOut,setCheckOut]=useState(null);
+  const [Adult,setAdult] = useState(null);
+  const [Kid,setKid] = useState(null);
   const [PayDate,setPayDate] = useState('');
   const [PayType,setPayType] = useState('');
-  const [PriceWon,setPriceWon] = useState('');
-  const [RoomNumber,setRoomNumber] = useState([]);
-  const [CustomerId,setCustomerId] = useState('');
-  const [RoomType,setRoomType] = useState('');
+  const [PriceWon,setPriceWon] = useState(null);
+  const [RoomNumber,setRoomNumber] = useState(null);
+  const [CustomerId,setCustomerId] = useState(null);
+  const [RoomType,setRoomType] = useState(null);
 
 
   const getCheckIn = ( date ) => setCheckIn(date);
@@ -118,23 +118,26 @@ export default function Checkout() {
 
   const submitInfo = () => {
     setActiveStep(activeStep + 1);
-    Axios.post('http://localhost:5000/reservation',{
-      Check_In :CheckIn,
-      Check_Out :CheckOut,
-      Price_Won :PriceWon,
-      Adult : Adult,
-      Child :Kid,
-      Pay_Type: 'Card',
-      Room_Num: RoomNumber,
-      Pay_Date: (today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()),
-    }).then((res)=>{
-      if(res.data.result){
-        alert('예약 성공!');
-      }
-      else{
-        alert("예약에 실패했습니다");
-      }
-    });
+    console.log(CheckIn,CheckOut);
+    if(CheckOut!=null &&CheckIn<CheckOut &&Adult!=null){
+      Axios.post('http://localhost:5000/reservation',{
+        Check_In :CheckIn,
+        Check_Out :CheckOut,
+        Price_Won :PriceWon,
+        Adult : Adult,
+        Child :Kid,
+        Pay_Type: 'Card',
+        Room_Num: RoomNumber,
+        Pay_Date: (today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()),
+      }).then((res)=>{
+        if (res.data.isok) {
+          alert("예약 완료")
+        }
+      });
+    }else{
+      alert("예약에 실패했습니다");
+    }
+
   };
   
 
