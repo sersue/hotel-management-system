@@ -158,7 +158,7 @@ export default function ReservationMain() {
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
-            Reservation
+            예약하기
           </Typography>
 
           <Stepper activeStep={activeStep} className={classes.stepper}>

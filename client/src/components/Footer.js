@@ -14,27 +14,27 @@ function Footer() {
         <div className='footer-link-wrapper'>
           <div class='footer-link-items'>
             <h2>About Us</h2>
-            <Link to='/'>How it works</Link>
-            <Link to='/'>Testimonials</Link>
-            <Link to='/'>Careers</Link>
-            <Link to='/'>Investors</Link>
-            <Link to='/'>Terms of MyPage</Link>
+            <Link >How it works</Link>
+            <Link >Testimonials</Link>
+            <Link >Careers</Link>
+            <Link >Investors</Link>
+            <Link >Terms of MyPage</Link>
           </div>
           <div class='footer-link-items'>
             <h2>Contact Us</h2>
-            <Link to='/'>Contact</Link>
-            <Link to='/'>Support</Link>
-            <Link to='/'>Destinations</Link>
-            <Link to='/'>Sponsorships</Link>
+            <Link >Contact</Link>
+            <Link >Support</Link>
+            <Link >Destinations</Link>
+            <Link >Sponsorships</Link>
           </div>
         </div>
         <div className='footer-link-wrapper'>
           <div class='footer-link-items'>
             <h2>Social Media</h2>
-            <Link to='/'>Instagram</Link>
-            <Link to='/'>Facebook</Link>
-            <Link to='/'>Youtube</Link>
-            <Link to='/'>Twitter</Link>
+            <Link >Instagram</Link>
+            <Link >Facebook</Link>
+            <Link >Youtube</Link>
+            <Link >Twitter</Link>
           </div>
         </div>
       </div>

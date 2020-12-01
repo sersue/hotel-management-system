@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
+import Footer from './Footer';
 
 function Copyright() {
   return (
@@ -53,13 +54,21 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {
     flexGrow: 1,
   },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
+  cardmain: {
+    height: '100%',
+    weight: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  margin: {
+    marginTop: 50,
+  },
+  price_margin: {
+    marginTop: 30,
   },
 }));
 
-const cards = [1, 2, 3];
+// const cards = [1, 2, 3, 4, 5, 6, 7];
 
 export default function Album() {
   const classes = useStyles();
@@ -69,56 +78,259 @@ export default function Album() {
       <CssBaseline />
       <main>
         {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
+        {/* <div className={classes.heroContent}>
+        {/* <img src='images/image123.png'></img> */}
+          {/* <Container maxWidth="sm">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              호텔 델루나
+              HOTEL DELUNA
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                엄 태 호
+                
             </Typography>
           </Container>
-        </div>
+        </div> */} 
+        <Typography className={classes.margin} component="h1" variant="h2" align="center" color="textPrimary" >
+              HOTEL DELUNA ROOMS
+            </Typography>
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+
+              {/* 첫번째 카드 */}
+              <Grid item xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
+                    image="images/img-room2.jpg"
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      싱글 룸
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the content.
+                      -제한 인원 : 2명
+                    </Typography>
+                    <Typography>
+                      -싱글배드 : 1개
+                    </Typography>
+                    <Typography>
+                      -면적 : 16 제곱미터(m2)
+                    </Typography>
+                    <Typography className={classes.price_margin} variant="h4" align="right" >
+                      75,000₩
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button href='singleroom' size="small" color="primary">
                       자세히보기
                     </Button>
                   </CardActions>
                 </Card>
               </Grid>
-            ))}
+
+              {/* 두번째 카드 */}
+              <Grid item xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="images/img-room2.jpg"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      더블 룸
+                    </Typography>
+                    <Typography>
+                      -제한 인원 : 4명
+                    </Typography>
+                    <Typography>
+                      -더블배드 : 1개
+                    </Typography>
+                    <Typography>
+                      -면적 : 18 제곱미터(m2)
+                    </Typography>
+                    <Typography className={classes.price_margin} variant="h4"  align="right" >
+                      120,000₩
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button href='doubleroom'size="small" color="primary">
+                      자세히보기
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+
+              {/* 세번째 카드 */}
+              <Grid item xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="images/img-room2.jpg"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      트윈 룸
+                    </Typography>
+                    <Typography>
+                      -제한 인원 : 5명
+                    </Typography>
+                    <Typography>
+                      -싱글배드 : 2개
+                    </Typography>
+                    <Typography>
+                      -면적 : 26 제곱미터(m2)
+                    </Typography>
+                    <Typography className={classes.price_margin} variant="h4"  align="right" >
+                      150,000₩
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button href='twinroom' size="small" color="primary">
+                      자세히보기
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+
+              {/* 네번째 카드 */}
+              <Grid item xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="images/img-room2.jpg"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      트리플 룸
+                    </Typography>
+                    <Typography>
+                      -제한 인원 : 4명
+                    </Typography>
+                    <Typography>
+                      -싱글배드 : 3개
+                    </Typography>
+                    <Typography>
+                      -면적 : 26 제곱미터(m2)
+                    </Typography>
+                    <Typography className={classes.price_margin} variant="h4"  align="right" >
+                      200,000₩
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button href='tripleroom' size="small" color="primary">
+                      자세히보기
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+
+              {/* 다섯번째 카드 */}
+              <Grid item xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="images/img-room2.jpg"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      디럭스 트윈룸
+                    </Typography>
+                    <Typography>
+                      -제한 인원 : 4명
+                    </Typography>
+                    <Typography>
+                      -더블배드 : 2개
+                    </Typography>
+                    <Typography>
+                      -면적 : 28 제곱미터(m2)
+                    </Typography>
+                    <Typography className={classes.price_margin} variant="h4"  align="right" >
+                      240,000₩
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button href='deluxroom' size="small" color="primary">
+                      자세히보기
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+
+              {/* 여섯번째 카드 */}
+              <Grid item xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="images/img-room2.jpg"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      온돌 룸
+                    </Typography>
+                    <Typography>
+                      -제한 인원 : 6명
+                    </Typography>
+                    <Typography>
+                      -한국식 이불 : 2개
+                    </Typography>
+                    <Typography>
+                      -면적 : 34 제곱미터(m2)
+                    </Typography>
+                    <Typography className={classes.price_margin} variant="h4"  align="right" >
+                      240,000₩
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button href='ondolroom' size="small" color="primary">
+                      자세히보기
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+
+              {/* 일곱번째 카드 */}
+              <Grid item xs={12} sm={6} md={4}>
+                <Card className={classes.cardmain}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="images/img-room2.jpg"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      스위트 룸
+                    </Typography>
+                    <Typography>
+                      -제한 인원 : 8명
+                    </Typography>
+                    <Typography>
+                      -더블배드 : 2개
+                    </Typography>
+                    <Typography>
+                      -면적 : 40 제곱미터(m2)
+                    </Typography>
+                    <Typography className={classes.price_margin} variant="h4"  align="right" >
+                      320,000₩
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button href='sweetroom' size="small" color="primary">
+                      자세히보기
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
           </Grid>
         </Container>
       </main>
       {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </footer>
+      {/* <Footer></Footer> */}
       {/* End footer */}
     </React.Fragment>
   );

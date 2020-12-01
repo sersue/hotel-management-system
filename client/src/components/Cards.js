@@ -10,30 +10,30 @@ function Cards() {
           <ul className='cards__items'>
             <CardItem
               src='images/img-room2.jpg'
-              text='Sweet Room Sweet Room Sweet Room Sweet Room'
+              text='Sweet Room'
               label='Luxury'
-              path='/mypage'
+              // path='/mypage'
             />
-            <CardItem to
+            <CardItem
               src='images/img-lounge.jpg'
-              text='Hotel Lounge Hotel Lounge Hotel Lounge'
+              text='Hotel Lounge'
               label='Luxury'
             />
           </ul>
           <ul className='cards__items'>
             <CardItem
               src='images/img-restaurant.jpg'
-              text='Restaurant Restaurant Restaurant Restaurant'
+              text='Restaurant'
               label='Luxury'
             />
             <CardItem
               src='images/img-swimmingpool2.jpg'
-              text='Swimming Pool Swimming Pool Swimming Pool'
+              text='Swimming Pool'
               label='Luxury'
             />
             <CardItem
               src='images/img-parking2.jpg'
-              text='Parking Parking Parking Parking'
+              text='Parking'
               label='Luxury'
             />
           </ul>

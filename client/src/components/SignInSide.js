@@ -98,7 +98,7 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            디비디바비디부
+            로그인
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -141,7 +141,7 @@ export default function SignInSide() {
               onClick = {submitInfo}
               // href='/'
             >
-              Sign In
+              로그인
             </Button>
             <Grid container>
               <Grid item xs>
