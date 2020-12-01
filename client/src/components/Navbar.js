@@ -43,7 +43,7 @@ function Navbar() {
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                방소개
+                방 소개
               </Link>
             </li>
           <li className='nav-item'>

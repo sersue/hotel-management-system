@@ -9,6 +9,13 @@ import LogIn from './components/pages/LogIn';
 import SignUp from './components/pages/SignUp';
 import Confirmation from './components/pages/Confirmation';
 import description from './components/pages/description'
+import SingleRoom from './components/room_pages/singleroom';
+import DoubleRoom from './components/room_pages/doubleroom';
+import TwinRoom from './components/room_pages/twinroom';
+import TripleRoom from './components/room_pages/tripleroom';
+import DeluxRoom from './components/room_pages/deluxroom';
+import OndolRoom from './components/room_pages/ondolroom';
+import SweetRoom from './components/room_pages/sweetroom';
 
 
 
@@ -39,6 +46,14 @@ function App() {
             )}
           />
           <Route path='/signup' component={SignUp} />
+
+          <Route path='/singleroom' component={SingleRoom} />
+          <Route path='/doubleroom' component={DoubleRoom} />
+          <Route path='/twinroom' component={TwinRoom} />
+          <Route path='/tripleroom' component={TripleRoom} />
+          <Route path='/deluxroom' component={DeluxRoom} />
+          <Route path='/ondolroom' component={OndolRoom} />
+          <Route path='/sweetroom' component={SweetRoom} />
         </Switch>
       </Router>
   );
