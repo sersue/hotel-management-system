@@ -101,7 +101,7 @@ export default function Album() {
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="images/img-room2.jpg"
+                    image="images/single.jpeg"
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
@@ -134,7 +134,7 @@ export default function Album() {
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="images/img-room2.jpg"
+                    image="images/double.jpeg"
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
@@ -167,7 +167,7 @@ export default function Album() {
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="images/img-room2.jpg"
+                    image="images/twin.jpeg"
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
@@ -200,7 +200,7 @@ export default function Album() {
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="images/img-room2.jpg"
+                    image="images/triple.jpeg"
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
@@ -233,7 +233,7 @@ export default function Album() {
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="images/img-room2.jpg"
+                    image="images/delux.jpeg"
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
@@ -266,7 +266,7 @@ export default function Album() {
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="images/img-room2.jpg"
+                    image="images/ondol2.jpeg"
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
@@ -299,7 +299,7 @@ export default function Album() {
                 <Card className={classes.cardmain}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="images/img-room2.jpg"
+                    image="images/sweet.jpeg"
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
