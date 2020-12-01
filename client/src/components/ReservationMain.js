@@ -66,14 +66,14 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Check IN-OUT', 'Room Type','Select Room','Review your order'];
 
-function getStepContent(step,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon,getRoomType,CheckIn,CheckOut,Adult,Kid,PriceWon,getRoomNumber,RoomType,RoomNumber}) {
+function getStepContent(step,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon,CheckIn,CheckOut,Adult,Kid,PriceWon,getRoomNumber,RoomType,RoomNumber}) {
   switch (step) {
     case 0:
       return <CheckInOutform GetCheakIN = {getCheckIn} GetCheakOUT= {getCheckOut} GetAdult= {getAdult} GetKid= {getKid}/>;
     case 1:
       return <RoomTypeform />;
     case 2:
-      return <SelectRoom Getroomnuber={getRoomNumber} UserSelectRoomType={RoomType}/>;
+      return <SelectRoom Getroomnuber={getRoomNumber} CheckIn={CheckIn} CheckOut={CheckOut}/>;
     case 3:
       return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon} RoomNumber={RoomNumber} Getpricewon={getPriceWon}/>;  
     default:
@@ -81,7 +81,7 @@ function getStepContent(step,{getCheckIn,getCheckOut,getAdult,getKid,getPriceWon
   }
 }
 
-export default function Checkout() {
+export default function ReservationMain() {
   Axios.defaults.withCredentials = true; // for cookie
   const classes = useStyles();
   const [CheckIn,setCheckIn]=useState(null);

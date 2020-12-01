@@ -16,7 +16,7 @@ import { PricingTable, PricingSlot, PricingDetail } from 'react-pricing-table';
 import Slider from '@material-ui/core/Slider';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-
+import Axios from 'axios';
 const useStyles = makeStyles((theme) => ({
     '@global': {
         ul: {
@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "1rem",
         lineHeight: 1.5,
     }, gridbox: {
-
         border: '2px solid #d3d3d3',
         borderRadius: '5px',
     },
@@ -59,59 +58,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const tiers = [
-    { title: '201', type: '2', floor: 2, res: true },
-    { title: '202', type: '2', floor: 2, res: true },
-    { title: '203', type: '2', floor: 2, res: true },
-    { title: '204', type: '2', floor: 2, res: true },
-    { title: '205', type: '2', floor: 2, res: true },
-    { title: '206', type: '2', floor: 2, res: true },
-    { title: '207', type: '2', floor: 2, res: true },
-    { title: '208', type: '2', floor: 2, res: true },
-    { title: '209', type: '2', floor: 2, res: true },
-    { title: '210', type: '2', floor: 2, res: true },
-    { title: '211', type: '4', floor: 2, res: true },
-    { title: '212', type: '4', floor: 2, res: true },
-    { title: '213', type: '4', floor: 2, res: true },
-    { title: '214', type: '4', floor: 2, res: false },
-    { title: '215', type: '4', floor: 2, res: false },
-    { title: '216', type: '4', floor: 2, res: false },
-    { title: '217', type: '4', floor: 2, res: false },
-    { title: '218', type: '4', floor: 2, res: false },
-    { title: '219', type: '4', floor: 2, res: false },
-    { title: '220', type: '4', floor: 2, res: false },
 
-
-
-    //3
-    { title: '301', type: '2', floor: 3, res: false },
-    { title: '302', type: '2', floor: 3, res: false },
-    { title: '303', type: '2', floor: 3, res: false },
-    { title: '304', type: '2', floor: 3, res: false },
-    { title: '305', type: '2', floor: 3, res: false },
-    { title: '306', type: '2', floor: 3, res: false },
-    { title: '307', type: '2', floor: 3, res: false },
-    { title: '308', type: '2', floor: 3, res: false },
-    { title: '309', type: '2', floor: 3, res: false },
-    { title: '310', type: '2', floor: 3, res: false },
-    { title: '311', type: '4', floor: 3, res: false },
-    { title: '312', type: '4', floor: 3, res: false },
-    { title: '313', type: '4', floor: 3, res: false },
-    { title: '314', type: '4', floor: 3, res: false },
-    { title: '315', type: '4', floor: 3, res: false },
-    { title: '316', type: '4', floor: 3, res: false },
-    { title: '317', type: '4', floor: 3, res: false },
-    { title: '318', type: '4', floor: 3, res: false },
-    { title: '319', type: '4', floor: 3, res: false },
-    { title: '320', type: '4', floor: 3, res: false },
-
-
-];
-
-export default function Selectroom({ Getroomnuber, UserSelectRoomType }) {
+export default function Selectroom({ Getroomnuber, CheckIn ,CheckOut }) {
     const [roomnumber, setroomnumber] = useState([]);
     const [floor, setfloor] = useState([2,3]);
+    const [tiers, settiers] = useState([]);
     const classes = useStyles();
+
+    useEffect( ()=>{
+        Axios.post('http://localhost:5000/reservation/getroom',{
+            Check_In: CheckIn,
+            Check_Out: CheckOut,
+        }).then((response)=>{
+            settiers(response.data);
+        });
+        console.log(tiers);
+    
+      },[]);
 
     const handleChange = (event, newValue) => {
         setfloor(newValue);
@@ -131,14 +94,14 @@ export default function Selectroom({ Getroomnuber, UserSelectRoomType }) {
     function getbutton(tier, floor) {
         if (floor[0] <= tier.floor && floor[1] >= tier.floor) {
             switch (tier.type) {
-                case '2':
+                case 'Single':
                     if (tier.res) {
                         return (
-                            <Grid className={classes.buttongrid} key={tier.title}>
+                             <Grid className={classes.buttongrid} key={tier.title}>
                                 <button className={classes.button2} disabled onClick={() => selectroombutton(tier.title)}>
                                     {tier.title}
                                 </button>
-                            </Grid>
+                             </Grid>
                         )
                     } else {
                         return (
@@ -150,7 +113,7 @@ export default function Selectroom({ Getroomnuber, UserSelectRoomType }) {
                         )
                     }
 
-                case '4':
+                case 'Twin':
                     if (tier.res) {
                         return (
                             <Grid className={classes.buttongrid} key={tier.title}>
@@ -168,12 +131,19 @@ export default function Selectroom({ Getroomnuber, UserSelectRoomType }) {
                             </Grid>
                         )
                     }
+                default:
+                    return(
+                        <Grid className={classes.buttongrid} key={tier.title}>
+                            <button className={classes.button4} onClick={() => selectroombutton(tier.title)}>
+                                {tier.title}
+                            </button>
+                        </Grid>
+                    )
+                
             }
         }
     }
-    function selectedroomprint(){
-        return roomnumber.length +"개";
-    }
+
     return (
         <React.Fragment>
             <CssBaseline />
@@ -182,27 +152,25 @@ export default function Selectroom({ Getroomnuber, UserSelectRoomType }) {
                     Select Room
                 </Typography>
             </Container>
-            <Slider
-                value={floor}
-                onChange={handleChange}
-                valueLabelDisplay="auto"
-                step={1}
-                min={2}
-                max={10}
-                aria-labelledby="range-slider"
-            />
-            
-            <Container maxWidth="md" component="main">
-
-                <Grid className={classes.gridbox} container spacing={5} alignItems="flex-end">
-                    {tiers.map((tier) => (
-                        getbutton(tier, floor)
-                    ))}
+            <Grid container>
+                <Grid item xs={12}>
+                    <Slider
+                        value={floor}
+                        onChange={handleChange}
+                        valueLabelDisplay="auto"
+                        step={1}
+                        min={2}
+                        max={8}
+                        aria-labelledby="range-slider"
+                    />
+                    <div style={{minHeight: 35}}></div>
                 </Grid>
-                <Typography id="range-slider" gutterBottom>
-                    {roomnumber.length>0 ? selectedroomprint():null}
-                </Typography>
-            </Container>
+                <Grid container className={classes.gridbox} item xs={12} >
+                        {tiers.map((tier) => (
+                            getbutton(tier, floor)
+                        ))}
+                </Grid>
+            </Grid>
         </React.Fragment>
     );
 }
