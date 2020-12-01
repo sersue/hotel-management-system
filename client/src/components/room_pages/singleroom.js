@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     },
   image: {
-    width: 670,
+    width: '100%',
   },
 }));
 
@@ -95,7 +95,8 @@ export default function SingleRoom() {
         <Grid>오리털 이불, 욕실 매트, 헤어 브러시, 의류 방향제, 위생백, 세탁백, 구두광택용 페이퍼, 티슈, 미네랄 워터, 커피, 타월, 티 세트, 차(일본차), 면봉, 슬리퍼(일회용슬리퍼), 나이트 웨어, 헤어 드라이어, 페이스 타월, 목욕 타월, 샤워 캡, 면도기, 양치 세트, 페이스 소프, 바디 소프, 샴푸, 컨디셔너</Grid>
       </Paper>
       <Paper className={classes.paper}>
-      <img src='images/single.jpeg' className={classes.image}></img>
+      <img 
+      src='images/single.jpeg' className={classes.image}></img>
       <img src='images/single1.jpg' className={classes.image}></img>
       <img src='images/toilet.jpg' className={classes.image}></img>
 

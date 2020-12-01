@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     },
   image: {
-    width:670,
+    width: '100%',
   },
 }));
 
