@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 800,
+      width: 720,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
@@ -64,9 +64,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     },
   image: {
-    flex: 1,
-    width: 300,
-    height: 330,
+    width:670,
   },
 }));
 
@@ -80,7 +78,6 @@ export default function DoubleRoom() {
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <img src='images/double.jpeg' className={classes.image} align="top" align="right" border="1"></img>
         <Typography component="h1" variant="h3" align="left">
             더블 룸
           </Typography>
@@ -91,17 +88,19 @@ export default function DoubleRoom() {
       <Typography className={classes.title} variant="h6" >
         객실시설
       </Typography>
-        <Grid>욕실(화장실과 분리된 타입), 화장실(욕실과 분리된 타입), 인터넷 접속용 Wi-Fi</Grid>
-        <Grid>환경, 공기청정기(가습기용)</Grid>
+        <Grid>욕실(화장실과 분리된 타입), 화장실(욕실과 분리된 타입), 인터넷 접속용 Wi-Fi 환경, 공기청정기(가습기용)</Grid>
       <Typography className={classes.title} variant="h6" >
         객실 어메니티
       </Typography>
-        <Grid>오리털 이불, 욕실 매트, 헤어 브러시, 의류 방향제, 위생백, 세탁백, 구두광택용</Grid>
-        <Grid>페이퍼, 티슈, 미네랄 워터, 커피, 타월, 티 세트, 차(일본차), 면봉, 슬리퍼(일회용</Grid>
-        <Grid>슬리퍼), 나이트 웨어, 헤어 드라이어, 페이스 타월, 목욕 타월, 샤워 캡, 면도기, </Grid>
-        <Grid>양치 세트, 페이스 소프, 바디 소프, 샴푸, 컨디셔너</Grid>
+      <Grid>오리털 이불, 욕실 매트, 헤어 브러시, 의류 방향제, 위생백, 세탁백, 구두광택용 페이퍼, 티슈, 미네랄 워터, 커피, 타월, 티 세트, 차(일본차), 면봉, 슬리퍼(일회용슬리퍼), 나이트 웨어, 헤어 드라이어, 페이스 타월, 목욕 타월, 샤워 캡, 면도기, 양치 세트, 페이스 소프, 바디 소프, 샴푸, 컨디셔너</Grid>
       </Paper>
         
+      <Paper className={classes.paper}>
+      <img src='images/double.jpg' className={classes.image}></img>
+      <img src='images/double1.jpg' className={classes.image}></img>
+      <img src='images/toilet.jpg' className={classes.image}></img>
+
+      </Paper>
       </main>
     </React.Fragment>
     </>
