@@ -6,6 +6,7 @@ const session = require('express-session');
 const mysql = require('mysql');
 const cors= require('cors');
 const { request } = require('express');
+const { compare } = require('bcrypt');
 
 
 let router = express.Router();
@@ -63,8 +64,8 @@ router.get('/',function (req,res,next){
 
 router.post('/getroom',function (req,res){
     console.log(req.body);
-    const q = `SELECT DISTINCT Room_Num AS title, Room_Type AS type, (Room_Num DIV 100) AS floor, (FALSE) AS res from Room natural join Room_Type where Room_Num NOT IN (SELECT distinct Room_Num FROM Reservation NATURAL JOIN Room WHERE NOT(Check_Out < 2020-12-01 OR Check_In < 2020-12-20)) union (SELECT distinct Room_Num AS title, Room_Type AS type, (Room_Num DIV 100) AS floor, (TRUE) AS res FROM Reservation NATURAL JOIN Room WHERE NOT(Check_Out < ${req.body.Check_In} OR Check_In < ${req.body.Check_Out})) order by title asc`
-
+    const q = `SELECT DISTINCT Room_Num AS title, Room_Type AS type, (Room_Num DIV 100) AS floor, (FALSE) AS res from Room natural join Room_Type where Hotel_ID =1 AND Room_Num NOT IN (SELECT distinct Room_Num FROM Reservation NATURAL JOIN Room WHERE NOT(Check_Out < ${req.body.Check_In} OR Check_In < ${req.body.Check_Out})) union (SELECT distinct Room_Num AS title, Room_Type AS type, (Room_Num DIV 100) AS floor, (TRUE) AS res FROM Reservation NATURAL JOIN Room WHERE Hotel_ID =1 AND NOT(Check_Out < ${req.body.Check_In} OR Check_In < ${req.body.Check_Out})) order by title asc;`
+    console.log(q);
     db.query(
         q,
         (err,result1)=>{

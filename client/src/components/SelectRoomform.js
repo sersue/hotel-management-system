@@ -91,49 +91,57 @@ export default function Selectroom({ Getroomnuber, CheckIn ,CheckOut }) {
         }
     };
 
+
     function getbutton(tier, floor) {
+        console.log(tier);
         if (floor[0] <= tier.floor && floor[1] >= tier.floor) {
             switch (tier.type) {
+                
                 case 'Single':
                     if (tier.res) {
                         return (
-                             <Grid className={classes.buttongrid} key={tier.title}>
+                             <Grid className={classes.buttongrid}>
                                 <button className={classes.button2} disabled onClick={() => selectroombutton(tier.title)}>
                                     {tier.title}
                                 </button>
                              </Grid>
                         )
+                        break;
                     } else {
                         return (
-                            <Grid className={classes.buttongrid} key={tier.title}>
+                            <Grid className={classes.buttongrid} >
                                 <button className={classes.button2} onClick={() => selectroombutton(tier.title)}>
                                     {tier.title}
                                 </button>
                             </Grid>
                         )
+                        break;
                     }
-
+                    
                 case 'Twin':
                     if (tier.res) {
                         return (
-                            <Grid className={classes.buttongrid} key={tier.title}>
+                            <Grid className={classes.buttongrid} >
                                 <button className={classes.button4} disabled onClick={() => selectroombutton(tier.title)}>
                                     {tier.title}
                                 </button>
                             </Grid>
                         )
+                        break;
                     } else {
                         return (
-                            <Grid className={classes.buttongrid} key={tier.title}>
+                            <Grid className={classes.buttongrid} >
                                 <button className={classes.button4} onClick={() => selectroombutton(tier.title)}>
                                     {tier.title}
                                 </button>
                             </Grid>
                         )
+                        break;
                     }
+
                 default:
                     return(
-                        <Grid className={classes.buttongrid} key={tier.title}>
+                        <Grid className={classes.buttongrid} >
                             <button className={classes.button4} onClick={() => selectroombutton(tier.title)}>
                                 {tier.title}
                             </button>
@@ -166,9 +174,9 @@ export default function Selectroom({ Getroomnuber, CheckIn ,CheckOut }) {
                     <div style={{minHeight: 35}}></div>
                 </Grid>
                 <Grid container className={classes.gridbox} item xs={12} >
-                        {tiers.map((tier) => (
-                            getbutton(tier, floor)
-                        ))}
+                    {tiers.map((tier) => (
+                        getbutton(tier, floor)
+                    ))}
                 </Grid>
             </Grid>
         </React.Fragment>
