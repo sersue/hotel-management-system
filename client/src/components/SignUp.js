@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -53,59 +53,75 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   Axios.defaults.withCredentials = true; // for cookie
   const classes = useStyles();
-  const [First_Name,setFirst_Name]=useState(null);
-  const [Last_Name,setLast_Name]=useState(null);
-  const [E_Mail,setE_Mail] = useState(null);
-  const [Login_PW,setLogin_PW] = useState(null);
-  const [Birthday,setBirthday] = useState(null);
-  const [Login_ID,setLogin_ID] = useState(null);
-  const [Login_PWcheck,setLogin_PWcheck] = useState(null);
-  const [Phone_Number,setPhone_Number] = useState(null);
-  const [Zip,setZip] = useState(null);
-  const [Apt_Num,setApt_Num] = useState(null);
-  const [Nationality,setNationality] = useState(null);
-  const [Fax,setFax] = useState('000-000-0000');
-  const [Gender,setGender] = useState('NO');
-
-  const  getBirthday = ( Birthday ) => setBirthday(Birthday);
-  const  getNationality = ( Nationality  ) => setNationality(Nationality );
-  const  getgender = ( Gender  ) => setGender(Gender );
+  const [First_Name, setFirst_Name] = useState(null);
+  const [Last_Name, setLast_Name] = useState(null);
+  const [E_Mail, setE_Mail] = useState(null);
+  const [Login_PW, setLogin_PW] = useState(null);
+  const [Birthday, setBirthday] = useState(null);
+  const [Login_ID, setLogin_ID] = useState(null);
+  const [Login_PWcheck, setLogin_PWcheck] = useState(null);
+  const [Phone_Number, setPhone_Number] = useState(null);
+  const [Zip, setZip] = useState(null);
+  const [Apt_Num, setApt_Num] = useState(null);
+  const [Nationality, setNationality] = useState(null);
+  const [Fax, setFax] = useState('000-000-0000');
+  const [Gender, setGender] = useState('NO');
+  const [checkidok, setcheckidok] = useState(false);
+  const getBirthday = (Birthday) => setBirthday(Birthday);
+  const getNationality = (Nationality) => setNationality(Nationality);
+  const getgender = (Gender) => setGender(Gender);
   const submitInfo = () => {
-    if (Apt_Num!=null&&Gender!=null&&Zip!=null&&Nationality!=null&&Phone_Number!=null&&Birthday!=null&&Login_PW !=null&&Login_PWcheck==Login_PW && Login_ID!=null && First_Name !=null&&Last_Name !=null&&E_Mail!=null) {
-      Axios.post('http://localhost:5000/signup',{
-        First_Name:First_Name,
-        Last_Name :Last_Name,
-        E_Mail:E_Mail, 
-        Login_PW:Login_PW,
-        Apt_Num:Apt_Num,
-        Zip:Zip,
-        Phone_Number:Phone_Number,
-        Login_ID:Login_ID,
-        Birthday:Birthday,
-        Fax:Fax,
-        Nationality:Nationality.label,
-        Gender:Gender
-      }).then((res)=>{
-        if(res.data.result){
-          document.location.href='/login'
+    if (Apt_Num != null && Gender != null && Zip != null && Nationality != null && Phone_Number != null && Birthday != null && Login_PW != null && Login_PWcheck == Login_PW && Login_ID != null && First_Name != null && Last_Name != null && E_Mail != null && checkidok) {
+      Axios.post('http://localhost:5000/signup', {
+        First_Name: First_Name,
+        Last_Name: Last_Name,
+        E_Mail: E_Mail,
+        Login_PW: Login_PW,
+        Apt_Num: Apt_Num,
+        Zip: Zip,
+        Phone_Number: Phone_Number,
+        Login_ID: Login_ID,
+        Birthday: Birthday,
+        Fax: Fax,
+        Nationality: Nationality.label,
+        Gender: Gender
+      }).then((res) => {
+        if (res.data.result) {
+          document.location.href = '/login'
           alert('회원가입 성공');
         }
       });
-      
-    }else{
-      alert("데이터입력이 틀렸습니다.");
+
+    } else {
+      if (checkidok == false) {
+        alert("아이디 중복 확인해주세요.")
+      } else {
+        alert("데이터입력이 틀렸습니다.");
+      }
+
     }
   };
-
-  useEffect(()=>{
-    Axios.get('http://localhost:5000/login').then((response)=>{
+  const checkID = () => {
+    Axios.post('http://localhost:5000/signup/checkid', {
+      Login_ID: Login_ID
+    }).then((res) => {
+      if (res.data.isok) {
+        alert("사용 가능");
+      } else {
+        alert("중복된 아이디가 존재합니다.");
+      }
+      setcheckidok(res.data.isok);
+    })
+  }
+  useEffect(() => {
+    Axios.get('http://localhost:5000/login').then((response) => {
       // if(response.data.loggedIn == true){
-        
+
       // }
       console.log(response); //login 되면 console loggedin 값 true
     }); //get : refresh 하면 login in or not 
 
-  },[]);
+  }, []);
 
   return (
 
@@ -120,7 +136,7 @@ export default function SignUp() {
         </Typography>
         <form className={classes.form} noValiBirthday>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={9}>
               <TextField
                 variant="outlined"
                 required
@@ -131,8 +147,19 @@ export default function SignUp() {
                 autoComplete="Login_ID"
                 onChange={(e) => {
                   setLogin_ID(e.target.value);
-              }}
+                }}
               />
+            </Grid>
+            <Grid item xs={3}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={checkID}
+              >
+                중복확인
+            </Button>
             </Grid>
 
             <Grid item xs={12}>
@@ -147,7 +174,7 @@ export default function SignUp() {
                 autoComplete="current-Login_PW"
                 onChange={(e) => {
                   setLogin_PW(e.target.value);
-              }}
+                }}
               />
             </Grid>
 
@@ -163,7 +190,7 @@ export default function SignUp() {
                 autoComplete="current-Login_PW"
                 onChange={(e) => {
                   setLogin_PWcheck(e.target.value);
-              }}
+                }}
               />
             </Grid>
 
@@ -178,8 +205,8 @@ export default function SignUp() {
                 label="First Name"
                 autoFocus
                 onChange={(e) => {
-                setFirst_Name(e.target.value);
-              }}
+                  setFirst_Name(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -192,8 +219,8 @@ export default function SignUp() {
                 name="Last_Name"
                 autoComplete="lname"
                 onChange={(e) => {
-                setLast_Name(e.target.value);
-              }}
+                  setLast_Name(e.target.value);
+                }}
               />
             </Grid>
 
@@ -208,7 +235,7 @@ export default function SignUp() {
                 autoComplete="E_Mail"
                 onChange={(e) => {
                   setE_Mail(e.target.value);
-              }}
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -222,7 +249,7 @@ export default function SignUp() {
                 autoComplete="Phone_Number"
                 onChange={(e) => {
                   setPhone_Number(e.target.value);
-              }}
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -237,7 +264,7 @@ export default function SignUp() {
                 autoComplete="Zip"
                 onChange={(e) => {
                   setZip(e.target.value);
-              }}
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -252,7 +279,7 @@ export default function SignUp() {
                 autoComplete="Apt_Num"
                 onChange={(e) => {
                   setApt_Num(e.target.value);
-              }}
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -266,35 +293,28 @@ export default function SignUp() {
                 autoComplete="Fax"
                 onChange={(e) => {
                   setFax(e.target.value);
-              }}
+                }}
               />
             </Grid>
             <Grid item xs={12}>
-              <SelecltConuntry getNationality ={getNationality}/>
+              <SelecltConuntry getNationality={getNationality} />
             </Grid>
             <Grid item xs={12}>
-              <SelecltDate getdate={getBirthday} Lableing={"생년월일"}/>
+              <SelecltDate getdate={getBirthday} Lableing={"생년월일"} />
             </Grid>
 
-           
+
             <Grid item xs={12}>
               <Genderset getgender={getgender}></Genderset>
-            </Grid> 
-             
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraE_Mails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and upBirthdays via E_Mail."
-              />
             </Grid>
+
           </Grid>
           <Button
-            //type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick = {submitInfo}
+            onClick={submitInfo}
           >
             회원가입
           </Button>
