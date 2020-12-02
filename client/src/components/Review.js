@@ -1,20 +1,12 @@
-import React ,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
+import Axios from 'axios';
 
-// 사용자 주소 가져외기
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-//사용자 카드 정보 가져오기\
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -28,15 +20,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Review({ CheckIn, CheckOut, Adult, Kid, PriceWon ,RoomNumber, Getpricewon}) {
+export default function Review({ CheckIn, CheckOut, Adult, Kid, PriceWon, RoomNumber, Getpricewon }) {
   const classes = useStyles();
-  let Totalprice=0;
-  const products = [];
-  for(let i =0; i<RoomNumber.length; i++){
-    products.push({name: RoomNumber[i], desc: '정보', price:100*(i+1)});
-    Totalprice += 100*(i+1);
-  }
-  Getpricewon(Totalprice);
+  const [Totalprice, setTotalprice] = useState(0);
+  let roominfo = []
+  let cardinfo = []
+  const [products, setproducts] = useState([]);
+  const [userinfo, setuserinfo] = useState([]);
+  useEffect(() => {
+    Axios.post('http://localhost:5000/reservation/review', {
+      RoomNumber: RoomNumber,
+    }).then(async (response) => {
+      console.log(response);
+      console.log(response.data.Room);
+      const A = async () => {
+        for (let i = 0; i < response.data.Room.length; i++) {
+          roominfo.push({ name: response.data.Room[i].Room_Num, desc: response.data.Room[i].Room_Type, price: response.data.Room[i].Price_won });
+          setTotalprice(Totalprice + response.data.Room[i].Price_won);
+        }
+      }
+      const B = async () => {
+        setproducts(roominfo);
+      }
+      await A();
+      await B();
+      const C = async () => {
+        if (response.data.user[0].haveCard) {
+          cardinfo.push({ name: 'Card type', detail: response.data.user[0].usercard.Card_Type });
+          cardinfo.push({ name: 'Card holder', detail: response.data.user[0].usercard.Bank });
+          cardinfo.push({ name: 'Card number', detail: response.data.user[0].usercard.CardNum });
+          cardinfo.push({ name: 'Expiry date', detail: response.data.user[0].usercard.Validity });
+        } else {
+          cardinfo.push({ name: '카드 정보가 없습니다.', detail: '' });
+          cardinfo.push({ name: '결제 방법', detail: '' });
+          cardinfo.push({ name: '카드 등록 :', detail: '마이페이지- 카드 등록' });
+          cardinfo.push({ name: '현장 결제 :', detail: '방문시 결제' });
+        }
+      }
+      const D = async () => {
+        setuserinfo(cardinfo);
+      }
+
+      await C();
+      await D();
+
+    });
+
+  }, []);
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -58,7 +89,7 @@ export default function Review({ CheckIn, CheckOut, Adult, Kid, PriceWon ,RoomNu
       <List disablePadding>
         {products.map((product) => (
           <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name+"호"} secondary={product.desc} />
+            <ListItemText primary={product.name + "호"} secondary={product.desc} />
             <Typography variant="body2">{product.price}</Typography>
           </ListItem>
         ))}
@@ -72,25 +103,18 @@ export default function Review({ CheckIn, CheckOut, Adult, Kid, PriceWon ,RoomNu
       </List>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Shipping
-          </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
-        </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
             Payment details
           </Typography>
           <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
+            {userinfo.map((info) => (
+              <React.Fragment>
                 <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
+                  <Typography gutterBottom>{info.name}</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
+                  <Typography gutterBottom>{info.detail}</Typography>
                 </Grid>
               </React.Fragment>
             ))}

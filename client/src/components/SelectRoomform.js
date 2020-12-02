@@ -59,32 +59,32 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function Selectroom({ Getroomnuber, CheckIn ,CheckOut }) {
+export default function Selectroom({ Getroomnuber, CheckIn, CheckOut }) {
     const [roomnumber, setroomnumber] = useState([]);
-    const [floor, setfloor] = useState([2,3]);
+    const [floor, setfloor] = useState([2, 3]);
     const [tiers, settiers] = useState([]);
     const classes = useStyles();
 
-    useEffect( ()=>{
-        Axios.post('http://localhost:5000/reservation/getroom',{
+    useEffect(() => {
+        Axios.post('http://localhost:5000/reservation/getroom', {
             Check_In: CheckIn,
             Check_Out: CheckOut,
-        }).then((response)=>{
+        }).then((response) => {
             settiers(response.data);
         });
         console.log(tiers);
-    
-      },[]);
+
+    }, []);
 
     const handleChange = (event, newValue) => {
         setfloor(newValue);
-      };
+    };
 
     const selectroombutton = (data) => {
 
-        if (roomnumber.indexOf(data)>-1) {
-            roomnumber.splice(roomnumber.indexOf(data),1)
-        }else{
+        if (roomnumber.indexOf(data) > -1) {
+            roomnumber.splice(roomnumber.indexOf(data), 1)
+        } else {
             roomnumber.push(data)
             setroomnumber(roomnumber);
             Getroomnuber(roomnumber)
@@ -93,18 +93,17 @@ export default function Selectroom({ Getroomnuber, CheckIn ,CheckOut }) {
 
 
     function getbutton(tier, floor) {
-        console.log(tier);
         if (floor[0] <= tier.floor && floor[1] >= tier.floor) {
             switch (tier.type) {
-                
+
                 case 'Single':
                     if (tier.res) {
                         return (
-                             <Grid className={classes.buttongrid}>
+                            <Grid className={classes.buttongrid}>
                                 <button className={classes.button2} disabled onClick={() => selectroombutton(tier.title)}>
                                     {tier.title}
                                 </button>
-                             </Grid>
+                            </Grid>
                         )
                         break;
                     } else {
@@ -117,7 +116,7 @@ export default function Selectroom({ Getroomnuber, CheckIn ,CheckOut }) {
                         )
                         break;
                     }
-                    
+
                 case 'Twin':
                     if (tier.res) {
                         return (
@@ -140,14 +139,14 @@ export default function Selectroom({ Getroomnuber, CheckIn ,CheckOut }) {
                     }
 
                 default:
-                    return(
+                    return (
                         <Grid className={classes.buttongrid} >
                             <button className={classes.button4} onClick={() => selectroombutton(tier.title)}>
                                 {tier.title}
                             </button>
                         </Grid>
                     )
-                
+
             }
         }
     }
@@ -171,7 +170,7 @@ export default function Selectroom({ Getroomnuber, CheckIn ,CheckOut }) {
                         max={8}
                         aria-labelledby="range-slider"
                     />
-                    <div style={{minHeight: 35}}></div>
+                    <div style={{ minHeight: 35 }}></div>
                 </Grid>
                 <Grid container className={classes.gridbox} item xs={12} >
                     {tiers.map((tier) => (

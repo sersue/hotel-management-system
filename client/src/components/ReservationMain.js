@@ -70,7 +70,7 @@ const steps = ['Check IN-OUT', 'Room Type', 'Select Room', 'Review your order'];
 function getStepContent(step, { getCheckIn, getCheckOut, getAdult, getKid, getPriceWon, CheckIn, CheckOut, Adult, Kid, PriceWon, getRoomNumber, RoomType, RoomNumber }) {
   switch (step) {
     case 0:
-      return <CheckInOutform GetCheakIN={getCheckIn} GetCheakOUT={getCheckOut} GetAdult={getAdult} GetKid={getKid} />;
+      return <CheckInOutform GetCheakIN={getCheckIn} GetCheakOUT={getCheckOut} GetAdult={getAdult} GetKid={getKid} CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} />;
     case 1:
       return <RoomTypeform />;
     case 2:
@@ -112,7 +112,7 @@ export default function ReservationMain() {
   const handleNext = () => {
     if (activeStep == 0 && CheckIn != null && CheckOut != null && Adult != null && Kid != null && CheckIn < CheckOut) {
       setActiveStep(activeStep + 1);
-    } else if (activeStep == 2 && RoomNumber != null) {
+    } else if (activeStep == 2 && RoomNumber != null && CustomerId != null) {
       setActiveStep(activeStep + 1);
     } else {
       if (activeStep == 1) {
@@ -120,6 +120,8 @@ export default function ReservationMain() {
       } else {
         if (CheckIn > CheckOut) {
           alert("체크인 체크아웃 날짜라를 확인하게요.")
+        } else if (CustomerId == null) {
+          alert("로그인 후 이용해주세요.")
         } else {
           alert("값을 입렫해주세요")
         }
@@ -137,7 +139,9 @@ export default function ReservationMain() {
     setActiveStep(activeStep + 1);
     console.log(CheckIn, CheckOut);
     if (CheckOut != null && CheckIn < CheckOut && Adult != null) {
+      console.log("여기는?")
       Axios.post('http://localhost:5000/reservation', {
+
         Check_In: CheckIn,
         Check_Out: CheckOut,
         Price_Won: PriceWon,
@@ -160,11 +164,14 @@ export default function ReservationMain() {
 
   useEffect(() => {
     Axios.get('http://localhost:5000/reservation').then((response) => {
-      // if(response.data.loggedIn == true){
+      if (response.data.permission) {
+        setCustomerId(response.data.Customer_ID);
+      } else {
+        setCustomerId(null);
+      }
 
-      // }
-      console.log(response); //login 되면 console loggedin 값 true
-    }); //get : refresh 하면 login in or not 
+      console.log(response);
+    });
 
   }, []);
 
