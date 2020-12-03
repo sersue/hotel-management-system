@@ -1,18 +1,7 @@
-// import React from 'react';
-// import './Button.css';
-// import { Link } from 'react-router-dom';
-
-// export function Button() {
-//   return (
-//     <Link to='sign-up'>
-//       <button className='btn'>Sign Up</button>
-//     </Link>
-//   );
-// }
-
 import React from 'react';
 import './Button.css';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 const STYLES = ['btn--primary', 'btn--outline', 'btn--test'];
 
@@ -41,10 +30,10 @@ export const Button1 = ({
         {children}
       </button>
     </Link>
-    
+
   );
 
-  
+
 };
 
 export const Button2 = ({
@@ -70,9 +59,76 @@ export const Button2 = ({
         {children}
       </button>
     </Link>
-    
+
   );
 
-  
+
 };
 
+export const Button3 = ({
+  children,
+  type,
+  onClick,
+  buttonStyle,
+  buttonSize
+}) => {
+  const checkButtonStyle = STYLES.includes(buttonStyle)
+    ? buttonStyle
+    : STYLES[0];
+
+  const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
+
+  return (
+    <Link to='/mypage' className='btn-mobile'>
+      <button
+        className={`btn ${checkButtonStyle} ${checkButtonSize}`}
+        onClick={onClick}
+        type={type}
+      >
+        {children}
+      </button>
+    </Link>
+
+  );
+
+
+};
+
+const logout = () => {
+  Axios.get('http://localhost:5000/login/sessionLogout')
+};
+
+export const Button4 = ({
+  children,
+  type,
+  onClick,
+  buttonStyle,
+  buttonSize,
+  getuser
+}) => {
+  const logout = () => {
+    Axios.get('http://localhost:5000/login/sessionLogout').then((res) => {
+      getuser(false);
+    })
+  };
+  const checkButtonStyle = STYLES.includes(buttonStyle)
+    ? buttonStyle
+    : STYLES[0];
+
+  const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
+
+  return (
+    <Link to='/' className='btn-mobile'>
+      <button
+        className={`btn ${checkButtonStyle} ${checkButtonSize}`}
+        onClick={logout}
+        type={type}
+      >
+        {children}
+      </button>
+    </Link>
+
+  );
+
+
+};

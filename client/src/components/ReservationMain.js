@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Check IN-OUT', 'Room Type', 'Select Room', 'Review your order'];
 
-function getStepContent(step, { getCheckIn, getCheckOut, getAdult, getKid, getPriceWon, CheckIn, CheckOut, Adult, Kid, PriceWon, getRoomNumber, RoomType, RoomNumber }) {
+function getStepContent(step, { getCheckIn, getCheckOut, getAdult, getKid, getPriceWon, CheckIn, CheckOut, Adult, Kid, PriceWon, getRoomNumber, RoomType, RoomNumber, getPayType }) {
   switch (step) {
     case 0:
       return <CheckInOutform GetCheakIN={getCheckIn} GetCheakOUT={getCheckOut} GetAdult={getAdult} GetKid={getKid} CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} />;
@@ -76,7 +76,7 @@ function getStepContent(step, { getCheckIn, getCheckOut, getAdult, getKid, getPr
     case 2:
       return <SelectRoom Getroomnuber={getRoomNumber} CheckIn={CheckIn} CheckOut={CheckOut} />;
     case 3:
-      return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon} RoomNumber={RoomNumber} Getpricewon={getPriceWon} />;
+      return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon} RoomNumber={RoomNumber} Getpricewon={getPriceWon} getPayType={getPayType} />;
     default:
       throw new Error('Unknown step');
   }
@@ -90,7 +90,7 @@ export default function ReservationMain() {
   const [Adult, setAdult] = useState(null);
   const [Kid, setKid] = useState(null);
   const [PayDate, setPayDate] = useState('');
-  const [PayType, setPayType] = useState('');
+  const [PayType, setPayType] = useState(false);
   const [PriceWon, setPriceWon] = useState(null);
   const [RoomNumber, setRoomNumber] = useState(null);
   const [CustomerId, setCustomerId] = useState(null);
@@ -104,7 +104,7 @@ export default function ReservationMain() {
   const getPriceWon = (date) => setPriceWon(date);
   const getRoomNumber = (date) => setRoomNumber(date);
   const getRoomType = (date) => setRoomType(date);
-
+  const getPayType = (date) => setPayType(date);
 
   let today = new Date();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -139,15 +139,13 @@ export default function ReservationMain() {
     setActiveStep(activeStep + 1);
     console.log(CheckIn, CheckOut);
     if (CheckOut != null && CheckIn < CheckOut && Adult != null) {
-      console.log("여기는?")
       Axios.post('http://localhost:5000/reservation', {
-
         Check_In: CheckIn,
         Check_Out: CheckOut,
         Price_Won: PriceWon,
         Adult: Adult,
         Child: Kid,
-        Pay_Type: 'Card',
+        Pay_Type: PayType ? "Card" : "Cash",
         Room_Num: RoomNumber,
         Pay_Date: (today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()),
       }).then((res) => {
@@ -197,17 +195,18 @@ export default function ReservationMain() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  예약 완료
                 </Typography>
-
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order confirmation, and will
-                  send you an update when your order has shipped.
+                  예약이 완료 되었습니다.
+                </Typography>
+                <Typography variant="subtitle1">
+                  예약 정보 및 취소는 예약확인을 이용해주세요.
                 </Typography>
               </React.Fragment>
             ) : (
                 <React.Fragment>
-                  {getStepContent(activeStep, { getCheckIn, getCheckOut, getAdult, getKid, getPriceWon, getRoomType, CheckIn, CheckOut, Adult, Kid, PriceWon, getRoomNumber, RoomType, RoomNumber })}
+                  {getStepContent(activeStep, { getCheckIn, getCheckOut, getAdult, getKid, getPriceWon, getRoomType, CheckIn, CheckOut, Adult, Kid, PriceWon, getRoomNumber, RoomType, RoomNumber, getPayType })}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button onClick={handleBack} className={classes.button}>

@@ -1,4 +1,4 @@
-import React ,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -16,8 +16,8 @@ import SelecltDate from './Date';
 
 
 // 로그인 시 로그인 된 손님의 예약 정보 가져오기
-const customer = [{reservation_number: 123456, Room_type:'싱글룸', Room_number: 101, CheckIn:'2020/12/24',CheckOut: '2020/12/25'},
-{reservation_number: 120342, Room_type:'온돌룸', Room_number: 103, CheckIn:'2020/12/27',CheckOut: '2020/12/28'}];
+const customer = [{ reservation_number: 123456, Room_type: '싱글룸', Room_number: 101, CheckIn: '2020/12/24', CheckOut: '2020/12/25' },
+{ reservation_number: 120342, Room_type: '온돌룸', Room_number: 103, CheckIn: '2020/12/27', CheckOut: '2020/12/28' }];
 
 
 function Copyright() {
@@ -61,15 +61,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
     padding: 10
-    
-    
+
+
   },
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
   space: {
-      marginTop: theme.spacing(2),
+    marginTop: theme.spacing(2),
   },
   listItem: {
     padding: theme.spacing(1, 0),
@@ -84,88 +84,119 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
   },
   margin1: {
-    marginLeft: theme.spacing(-0.6),  
+    marginLeft: theme.spacing(-0.6),
   },
   margin2: {
     marginLeft: theme.spacing(-0.2),
   },
-  margin3:{
+  margin3: {
     marginLeft: theme.spacing(-1),
   },
-  margin4:{
+  margin4: {
     marginLeft: theme.spacing(-6),
   }
 }));
 
-export default function Review({ CheckIn, CheckOut, Room_number, Kid, PriceWon ,RoomNumber}) {
+export default function Res_confirmation() {
   const classes = useStyles();
-//   let Totalprice=0;
-//   const products = [];
-//   for(let i =0; i<RoomNumber.length; i++){
-//     products.push({name: RoomNumber[i], desc: '정보', price:100*(i+1)});
-//     Totalprice += 100*(i+1);
-// }
+
+  const [tiers, settiers] = useState([]);
+  useEffect(() => {
+    Axios.get('http://localhost:5000/reservation/room').then((response) => {
+      console.log(response.data)
+      if (response.data.permission) {
+        settiers(response.data.ResRoom);
+      } else {
+        settiers([]);
+      }
+
+    });
+
+  }, []);
+  const clickdis = (data) => {
+    Axios.post('http://localhost:5000/reservation/unresroom', {
+      Reservation_ID: data,
+    }).then((response) => {
+      console.log(response.data);
+      settiers(response.data.ResRoom);
+
+
+    });
+  }
 
   return (
-    
+
     <React.Fragment>
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-        <Typography component="h1" variant="h4" align="center">
+          <Typography component="h1" variant="h4" align="center">
             예약 조회
           </Typography>
-      <Grid className={classes.title} container spacing={2}>
-        <Grid item xs={16} sm={2}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            예약 번호
-          </Typography>
-        </Grid>
-        <Grid item xs={16} sm={2}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            <margin className={classes.margin1}>객실 타입 </margin>
-          </Typography>
-        </Grid>
-        <Grid item xs={16} sm={2}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            <margin className={classes.margin2}>호수</margin>
-          </Typography>
-        </Grid>
-        <Grid item xs={16} sm={3}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            <margin className={classes.margin3}>체크인</margin>
-          </Typography>
-        </Grid>
-        <Grid item xs={16} sm={2}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            <margin className={classes.margin4} >체크아웃</margin>
-          </Typography>
-        </Grid>
-      </Grid>
-      <List>
-        {customer.map((a) => (
-          <ListItem className={classes.listItem}>       
-            <ListItemText className={classes.margin} primary={a.reservation_number}/>
-            <ListItemText primary={a.Room_type}/>
-            <ListItemText primary={a.Room_number}/>
-            <ListItemText primary={a.CheckIn}/>
-            <ListItemText primary={a.CheckOut}/>
+          <Grid className={classes.title} container spacing={2}>
+            {tiers.length > 0 ?
+              <>
+                <Grid item xs={16} sm={2}>
+                  <Typography variant="h6" gutterBottom className={classes.title}>
+                    예약 번호
+                  </Typography>
+                </Grid>
+                <Grid item xs={16} sm={2}>
+                  <Typography variant="h6" gutterBottom className={classes.title}>
+                    <margin className={classes.margin1}>객실 타입 </margin>
+                  </Typography>
+                </Grid>
+                <Grid item xs={16} sm={2}>
+                  <Typography variant="h6" gutterBottom className={classes.title}>
+                    <margin className={classes.margin2}>호수</margin>
+                  </Typography>
+                </Grid>
+                <Grid item xs={16} sm={3}>
+                  <Typography variant="h6" gutterBottom className={classes.title}>
+                    <margin className={classes.margin3}>체크인</margin>
+                  </Typography>
+                </Grid>
+                <Grid item xs={16} sm={2}>
+                  <Typography variant="h6" gutterBottom className={classes.title}>
+                    <margin className={classes.margin4} >체크아웃</margin>
+                  </Typography>
+                </Grid>
+              </>
+              : null
+            }
 
-            {/* 취소하기버튼 */}
-            
-                    <Button
+          </Grid>
+          {tiers.length > 0 ?
+            <List>
+              {tiers.map((a) => (
+                <ListItem className={classes.listItem}>
+                  <ListItemText className={classes.margin} primary={a.Reservation_ID} />
+                  <ListItemText primary={a.Room_Type} />
+                  <ListItemText primary={a.Room_Num} />
+                  <ListItemText primary={a.Check_In.slice(undefined, 10)} />
+                  <ListItemText primary={a.Check_Out.slice(undefined, 10)} />
+
+                  {/* 취소하기버튼 */}
+
+                  <Button
                     variant="contained"
                     color="primary"
-                    onClick={onclick} 
+                    onClick={() => clickdis(a.Reservation_ID)}
                     className={classes.buttons}>
-                      취소하기
+                    취소하기
                     </Button>
-                
-                
-          </ListItem>
-        ))}
-      </List>
-      </Paper>
+
+
+                </ListItem>
+              ))}
+            </List>
+            :
+            <Typography component="h1" variant="h4" align="center">
+              예약 정보가 없습니다.
+            </Typography>
+          }
+
+        </Paper>
         <Copyright />
       </main>
     </React.Fragment>

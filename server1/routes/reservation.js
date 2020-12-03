@@ -71,6 +71,29 @@ router
         }
     });
 
+
+router
+    .get("/room", (req, res) => {
+        console.log('세션 정보 확인')
+
+        if (req.session.user) {
+            console.log('사용자 확인')
+            const q1 = `SELECT Reservation_ID,Room_Type,Room_Num,Check_In,Check_Out FROM Reservation NATURAL JOIN Room_Type WHERe Customer_ID='${req.session.user[0].Customer_ID}'`
+            db.query(
+                q1,
+                (err1, result1) => {
+                    if (err1) {
+                        console.log(err1)
+                    }
+                    res.send({ permission: true, Customer_ID: req.session.user[0].Customer_ID, ResRoom: result1 });
+                }
+            )
+
+        } else {
+            console.log('세션 없음')
+            res.send({ permission: false });
+        }
+    });
 router.post('/review', async (req, res) => {
     const Customer_ID = req.session.user[0].Customer_ID;
     const Room_Num = req.body.RoomNumber;
@@ -134,8 +157,44 @@ router.post('/getroom', function (req, res) {
         }
     )
 });
+router.post('/unresroom', function (req, res) {
+    console.log("예약 취소 시작");
+    const q1 = `DELETE FROM Reservation WHERE Reservation_ID='${req.body.Reservation_ID}'`
+    db.query(
+        q1,
+        (err1, result1) => {
+            if (err1) {
+                console.log(err1);
+            }
+            console.log("예약 취소");
+            const q2 = `SELECT Reservation_ID,Room_Type,Room_Num,Check_In,Check_Out FROM Reservation NATURAL JOIN Room_Type WHERe Customer_ID='${req.session.user[0].Customer_ID}'`
+            db.query(
+                q2,
+                (err2, result2) => {
+                    if (err2) {
+                        console.log(err1)
+                    }
+                    console.log(result2);
+                    res.send({ permission: true, Customer_ID: req.session.user[0].Customer_ID, ResRoom: result2 });
+                }
+            )
+        }
+    )
+});
 
 router.post('/', function (req, res) {
+    function dateDiff(_date1, _date2) {
+        let diffDate_1 = _date1 instanceof Date ? _date1 : new Date(_date1);
+        let diffDate_2 = _date2 instanceof Date ? _date2 : new Date(_date2);
+
+        diffDate_1 = new Date(diffDate_1.getFullYear(), diffDate_1.getMonth() + 1, diffDate_1.getDate());
+        diffDate_2 = new Date(diffDate_2.getFullYear(), diffDate_2.getMonth() + 1, diffDate_2.getDate());
+
+        var diff = Math.abs(diffDate_2.getTime() - diffDate_1.getTime());
+        diff = Math.ceil(diff / (1000 * 3600 * 24));
+
+        return diff;
+    }
     const Room_Num = req.body.Room_Num;
     const Hotel_ID = 1;
     const Customer_ID = req.session.user[0].Customer_ID;
@@ -162,7 +221,7 @@ router.post('/', function (req, res) {
                         console.log(result1);
                         db.query(
                             sqlInsert2,
-                            [roomnum, Hotel_ID, result1[0].Price_won, Check_In, Check_Out, Adult, Child, Pay_Date, Pay_Type],
+                            [roomnum, Hotel_ID, result1[0].Price_won * dateDiff(Check_In, Check_Out), Check_In, Check_Out, Adult, Child, Pay_Date, Pay_Type],
                             (err2, result2) => {
                                 if (err2) {
                                     console.log(err2);

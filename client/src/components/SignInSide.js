@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Axios from 'axios'
 import Button from '@material-ui/core/Button';
@@ -13,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -59,33 +59,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide() {
+export default function SignInSide({ getuser }) {
   const classes = useStyles();
-
-  const [userid,setuserid] = useState('');
-  const [password,setpassword] = useState('');
+  const history = useHistory();
+  const [userid, setuserid] = useState('');
+  const [password, setpassword] = useState('');
 
   Axios.defaults.withCredentials = true; // for cookie
   const submitInfo = () => {
-    Axios.post('http://localhost:5000/login',{ // post : login input 하는 페이지 (login router 1)
-      Login_ID:userid, 
-      Login_PW:password
-    }).then((response)=>{
+    Axios.post('http://localhost:5000/login', { // post : login input 하는 페이지 (login router 1)
+      Login_ID: userid,
+      Login_PW: password
+    }).then((response) => {
       if (response.data.result) {
         console.log("로그인 성공");
-        document.location.href='/'
-      }else{
+        getuser(true);
+        history.push('/');
+      } else {
         alert(response.data.messages);
       }
-      
-      
+
+
     });
   };
 
-  useEffect(()=>{
-    Axios.get('http://localhost:5000/login').then((response)=>{
-    }); 
-  },[]);
+  useEffect(() => {
+    Axios.get('http://localhost:5000/login').then((response) => {
+    });
+  }, []);
 
 
   return (
@@ -125,7 +126,7 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={(e)=>{
+              onChange={(e) => {
                 setpassword(e.target.value);
               }}
             />
@@ -138,8 +139,8 @@ export default function SignInSide() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick = {submitInfo}
-              // href='/'
+              onClick={submitInfo}
+            // href='/'
             >
               로그인
             </Button>

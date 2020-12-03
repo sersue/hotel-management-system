@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import './App.css';
 import Home from './components/pages/Home';
@@ -18,44 +18,41 @@ import OndolRoom from './components/room_pages/ondolroom';
 import SweetRoom from './components/room_pages/sweetroom';
 
 
-
 function App() {
-  const [user, setUser] = useState(null);
-  const authenticated = user != null;
+  const [user, setUser] = useState(false);
+  const authenticated = user != false;
 
-  const logout = () => setUser(null);
-  const { email, password, name } = user || {};
-  console.log(user);
-  const userfull ={email, password, name};
-  console.log(userfull.email)
+
+  const getuser = (a) => setUser(a);
 
   return (
 
-      <Router>
-      <Navbar />
-        <Switch>
-          <Route path='/' exact component={Home} />
-          <Route path='/mypage' component={Mypage} />
-          <Route path='/reservation' component={Reservation} />
-          <Route path='/confirmation' component={Confirmation} />
-          <Route path='/description' component={description} />
-          <Route
-            path="/login"
-            render={props => (
-              <LogIn/>
-            )}
-          />
-          <Route path='/signup' component={SignUp} />
+    <Router>
+      <Navbar userin={user} getuser={getuser} />
+      <Switch>
+        <Route path='/' exact component={Home} />
+        <Route path='/mypage' component={Mypage} />
+        <Route path='/reservation' component={Reservation} />
+        <Route path='/confirmation' component={Confirmation} />
+        <Route path='/description' component={description} />
+        <Route
+          path="/login"
+          render={props => (
+            <LogIn getuser={getuser} />
+          )}
+        />
+        <Route path='/signup' component={SignUp} />
 
-          <Route path='/singleroom' component={SingleRoom} />
-          <Route path='/doubleroom' component={DoubleRoom} />
-          <Route path='/twinroom' component={TwinRoom} />
-          <Route path='/tripleroom' component={TripleRoom} />
-          <Route path='/deluxroom' component={DeluxRoom} />
-          <Route path='/ondolroom' component={OndolRoom} />
-          <Route path='/sweetroom' component={SweetRoom} />
-        </Switch>
-      </Router>
+        <Route path='/singleroom' component={SingleRoom} />
+        <Route path='/doubleroom' component={DoubleRoom} />
+        <Route path='/twinroom' component={TwinRoom} />
+        <Route path='/tripleroom' component={TripleRoom} />
+        <Route path='/deluxroom' component={DeluxRoom} />
+        <Route path='/ondolroom' component={OndolRoom} />
+        <Route path='/sweetroom' component={SweetRoom} />
+      </Switch>
+
+    </Router>
   );
 }
 
