@@ -84,7 +84,7 @@ export default function Review({ CheckIn, CheckOut, Adult, Kid, PriceWon, RoomNu
 
   }, []);
 
-  useEffect()
+  // useEffect()
 
   return (
     <React.Fragment>
