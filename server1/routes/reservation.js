@@ -6,7 +6,8 @@ const session = require('express-session');
 const mysql = require('mysql');
 const cors = require('cors');
 const { request } = require('express');
-const { compare } = require('bcrypt');
+const { compare, compareSync } = require('bcrypt');
+const e = require('express');
 
 
 let router = express.Router();
@@ -73,11 +74,11 @@ router
 
 router
     .get("/room", (req, res) => {
-        console.log('세션 정보 확인')
+        console.log('세션 정보 확인1')
 
         if (req.session.user) {
             console.log('사용자 확인')
-            const q1 = `SELECT Reservation_ID,Room_Type,Room_Num,Check_In,Check_Out FROM Reservation NATURAL JOIN Room_Type WHERe Customer_ID='${req.session.user[0].Customer_ID}'`
+            const q1 = `SELECT Reservation_ID,Room_Type,Room_Num,Check_In,Check_Out FROM Reservation NATURAL JOIN Room WHERE Customer_ID='${req.session.user[0].Customer_ID}'`
             db.query(
                 q1,
                 (err1, result1) => {
@@ -89,7 +90,7 @@ router
             )
 
         } else {
-            console.log('세션 없음')
+            console.log('세션 없음1')
             res.send({ permission: false });
         }
     });
@@ -144,7 +145,9 @@ router.post('/review', async (req, res) => {
 
 router.post('/getroom', function (req, res) {
 
-    const q = `SELECT DISTINCT Room_Num AS title, Room_Type AS type, (Room_Num DIV 100) AS floor, (FALSE) AS res from Room natural join Room_Type where Hotel_ID =1 AND Room_Num NOT IN (SELECT distinct Room_Num FROM Reservation NATURAL JOIN Room WHERE NOT(Check_Out < ${req.body.Check_In} OR Check_In < ${req.body.Check_Out})) union (SELECT distinct Room_Num AS title, Room_Type AS type, (Room_Num DIV 100) AS floor, (TRUE) AS res FROM Reservation NATURAL JOIN Room WHERE Hotel_ID =1 AND NOT(Check_Out < ${req.body.Check_In} OR Check_In < ${req.body.Check_Out})) order by title asc;`;
+    const q = `(SELECT DISTINCT Room_Num AS title, Room_Type AS type, (Room_Num DIV 100) AS floor, (FALSE) AS res from Room natural join Room_Type  where Hotel_ID =1 AND Room_Num NOT IN (SELECT distinct Room_Num FROM Reservation NATURAL JOIN Room WHERE NOT(Check_Out < '${req.body.Check_In}' OR Check_In >'${req.body.Check_Out}'))) union (SELECT distinct Room_Num AS title, Room_Type AS type, (Room_Num DIV 100) AS floor, (TRUE) AS res FROM Reservation NATURAL JOIN Room WHERE Hotel_ID =1 AND NOT(Check_Out < '${req.body.Check_In}' OR Check_In > '${req.body.Check_Out}')) ORDER BY title`
+
+
     db.query(
         q,
         (err, result1) => {
@@ -166,7 +169,7 @@ router.post('/unresroom', function (req, res) {
                 console.log(err1);
             }
             console.log("예약 취소");
-            const q2 = `SELECT Reservation_ID,Room_Type,Room_Num,Check_In,Check_Out FROM Reservation NATURAL JOIN Room_Type WHERe Customer_ID='${req.session.user[0].Customer_ID}'`
+            const q2 = `SELECT Reservation_ID,Room_Type,Room_Num,Check_In,Check_Out FROM Reservation NATURAL JOIN Room WHERE Customer_ID='${req.session.user[0].Customer_ID}'`
             db.query(
                 q2,
                 (err2, result2) => {
@@ -243,6 +246,5 @@ router.post('/', function (req, res) {
 
 
 });
-
 
 module.exports = router;

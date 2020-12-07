@@ -15,9 +15,7 @@ import SelecltDate from './Date';
 
 
 
-// 로그인 시 로그인 된 손님의 예약 정보 가져오기
-const customer = [{ reservation_number: 123456, Room_type: '싱글룸', Room_number: 101, CheckIn: '2020/12/24', CheckOut: '2020/12/25' },
-{ reservation_number: 120342, Room_type: '온돌룸', Room_number: 103, CheckIn: '2020/12/27', CheckOut: '2020/12/28' }];
+
 
 
 function Copyright() {

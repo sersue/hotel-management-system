@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
+var session = require('express-session');
 // const router = express();
 const mysql = require('mysql');
 const cors = require('cors');
@@ -39,15 +39,15 @@ router.use(express.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(cookieParser());
 
-router.use(session({
-    key: "user",
-    secret: "abc",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        expires: 60 * 60 * 24,
-    },
-}));
+// router.use(session({
+//     key: "user",
+//     secret: "abc",
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//         expires: 60 * 60 * 500,
+//     },
+// }));
 
 
 
@@ -89,6 +89,7 @@ router
                         }
                     });
                 } else {
+                    5
                     console.log("User doesn't exist");
                     res.send({ result: false, messages: "User doesn't exist" });
                 }

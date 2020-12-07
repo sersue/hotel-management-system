@@ -123,7 +123,7 @@ export default function ReservationMain() {
         } else if (CustomerId == null) {
           alert("로그인 후 이용해주세요.")
         } else {
-          alert("값을 입렫해주세요")
+          alert("값을 입력해주세요")
         }
 
       }
@@ -151,6 +151,8 @@ export default function ReservationMain() {
       }).then((res) => {
         if (res.data.isok) {
           alert("예약 완료")
+        } else {
+          alert("예약 실패")
         }
       });
     } else {

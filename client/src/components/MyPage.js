@@ -17,7 +17,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardHeader from '@material-ui/core/CardHeader';
-
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   button: {
-    padding: theme.spacing(1, 1,1),
+    padding: theme.spacing(1, 1, 1),
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 8,
   },
   TextlistItem: {
-    padding: theme.spacing(1, 1,1),
+    padding: theme.spacing(1, 1, 1),
     padding: 20,
   },
   cardHeader: {
@@ -85,12 +85,13 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cardBox: {
-    padding: theme.spacing(1,1,1),
+    padding: theme.spacing(1, 1, 1),
     textAlign: 'center',
   }
 }));
 
 export default function Review1() {
+  const history = useHistory();
   Axios.defaults.withCredentials = true;
   const classes = useStyles();
 
@@ -109,8 +110,8 @@ export default function Review1() {
   const [card_serial, setcard_serial] = useState('');
   const [userPW, setuserPW] = useState('');
   const [newPW, setnewPW] = useState('');
-  const [cardbuttononclick,setcardbuttononclick] = useState(false);
-  const [infobuttononclick,setinfobuttononclick] = useState(false);
+  const [cardbuttononclick, setcardbuttononclick] = useState(false);
+  const [infobuttononclick, setinfobuttononclick] = useState(false);
   const submitInfo1 = () => {
     if (card_bin != null && card_cvc != null && card_validity != null && card_password != null && card_serial != null) {
       Axios.post('http://localhost:5000/mypage', {
@@ -124,7 +125,7 @@ export default function Review1() {
       }).then((res) => {
         if (res.data.result) {
           alert('데이터 수정 성공!');
-          document.location.href='/mypage'
+          history.push('/');
         }
       });
     } else {
@@ -134,15 +135,15 @@ export default function Review1() {
   const submitInfo2 = () => {
     if (newPW != userPW) {
       Axios.post('http://localhost:5000/mypage/pw', {
-        UserPW : userPW,
-        NewPW : newPW,
-        Customer_ID:Customer_ID,
+        UserPW: userPW,
+        NewPW: newPW,
+        Customer_ID: Customer_ID,
 
       }).then((res) => {
         if (res.data.isok) {
           alert('비밀번호 변경완료!');
-          document.location.href='/mypage'
-        }else{
+          history.push('/');
+        } else {
           alert(res.data.messages);
         }
       });
@@ -150,14 +151,15 @@ export default function Review1() {
       alert("동일한 번호로 변경 안됨");
     }
   }
-  const submitInfo3 = ({card}) => {
+  const submitInfo3 = ({ card }) => {
     console.log(card);
     Axios.post('http://localhost:5000/mypage/carddel', {
-      Card_Serial : card.Card_Serial,
+      Card_Serial: card.Card_Serial,
     }).then((res) => {
       if (res.data.isok) {
         alert('카드 삭제');
-        document.location.href='/mypage'
+        history.push('/');
+
       }
     });
   }
@@ -177,10 +179,10 @@ export default function Review1() {
                 </Typography>
               </CardContent>
               <CardActions >
-                  <Button fullWidth variant={'outlined'} color="primary" onClick={()=>submitInfo3({card})}>
-                     삭제
+                <Button fullWidth variant={'outlined'} color="primary" onClick={() => submitInfo3({ card })}>
+                  삭제
                   </Button>
-                </CardActions>
+              </CardActions>
             </Card>
           </Grid>
         ))}
@@ -207,7 +209,7 @@ export default function Review1() {
             }}
           /></Grid>
         <Grid item xs={5}>
-          카드 뒷 6자리
+          카드 뒷 10자리
                 <TextField
             label={"xx-xxxx-xxxx"}
             variant="outlined"
@@ -270,16 +272,13 @@ export default function Review1() {
           />
         </Grid>
         <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              className={classes.button}
-              onClick={submitInfo1}
-              href='mypage'
-            >
-              추가하기
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          onClick={() => submitInfo1()}
+        >
+          추가하기
             </Button>
       </Grid>
     )
@@ -318,24 +317,24 @@ export default function Review1() {
         </Grid>
 
         <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              className={classes.button}
-              onClick={submitInfo2}
-              //href='mypage'
-            >
-              변경하기
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          className={classes.button}
+          onClick={submitInfo2}
+        //href='mypage'
+        >
+          변경하기
             </Button>
       </Grid>
     )
   }
-  const cardaddbutton = () =>{
+  const cardaddbutton = () => {
     setcardbuttononclick(true);
   }
-  const infoaddbutton = () =>{
+  const infoaddbutton = () => {
     setinfobuttononclick(true);
   }
   const [user, setuser] = useState(null);
@@ -381,32 +380,32 @@ export default function Review1() {
             <ListItem className={classes.listItem} >
               <ListItemText primary={Phone} />
             </ListItem>
-            {!infobuttononclick?(<Button
+            {!infobuttononclick ? (<Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.button}
-              onClick={()=>infoaddbutton()}
+              onClick={() => infoaddbutton()}
             >
               비밀번호 변경
-            </Button>):infoadd()}
+            </Button>) : infoadd()}
 
             <div className={classes.cardBox}>
-             {iscardhave ? mycards() : ''}
+              {iscardhave ? mycards() : ''}
             </div>
-            
 
-            {!cardbuttononclick?(<Button
+
+            {!cardbuttononclick ? (<Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.button}
-              onClick={()=>cardaddbutton()}
+              onClick={() => cardaddbutton()}
             >
               카드 추가
-            </Button>):cardadd()}
+            </Button>) : cardadd()}
 
           </List>
         </Paper>
