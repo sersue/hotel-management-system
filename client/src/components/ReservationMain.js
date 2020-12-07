@@ -76,7 +76,7 @@ function getStepContent(step, { getCheckIn, getCheckOut, getAdult, getKid, getPr
     case 2:
       return <SelectRoom Getroomnuber={getRoomNumber} CheckIn={CheckIn} CheckOut={CheckOut} />;
     case 3:
-      return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon} RoomNumber={RoomNumber} Getpricewon={getPriceWon} getPayType={getPayType} />;
+      return <Review CheckIn={CheckIn} CheckOut={CheckOut} Adult={Adult} Kid={Kid} PriceWon={PriceWon} RoomNumber={RoomNumber} getPayType={getPayType} />;
     default:
       throw new Error('Unknown step');
   }

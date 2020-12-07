@@ -7,10 +7,10 @@ var session = require('express-session');
 //라우터
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var loginrouter=require('./routes/login');
-var signuprouter=require('./routes/signup');
-var mypagerouter=require('./routes/mypage');
-var reservationrouter=require('./routes/reservation');
+var loginrouter = require('./routes/login');
+var signuprouter = require('./routes/signup');
+var mypagerouter = require('./routes/mypage');
+var reservationrouter = require('./routes/reservation');
 
 
 var app = express();
@@ -26,30 +26,30 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  key:"user",
-  secret:"abc",
-  resave:false,
-  saveUninitialized:false,
-  cookie:{
-      expires:60 * 60 *24,
+  key: "user",
+  secret: "abc",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    expires: 60 * 60 * 500,
   },
 }));
 
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/login',loginrouter);
-app.use('/signup',signuprouter);
-app.use('/mypage',mypagerouter);
-app.use('/reservation',reservationrouter);
+app.use('/login', loginrouter);
+app.use('/signup', signuprouter);
+app.use('/mypage', mypagerouter);
+app.use('/reservation', reservationrouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -59,16 +59,16 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.get("/",(req,res)=>{
-        console.log('세션 정보 확인')
-    if(req.session.user){
-        console.log('세션 존재')
-        res.send({loggedin:true,user:req.session.user});
-        
-    }else{
-        console.log('세션 없음')
-        res.send({loggedin:false});
-    }
+app.get("/", (req, res) => {
+  console.log('세션 정보 확인')
+  if (req.session.user) {
+    console.log('세션 존재')
+    res.send({ loggedin: true, user: req.session.user });
+
+  } else {
+    console.log('세션 없음')
+    res.send({ loggedin: false });
+  }
 });
 
 module.exports = app;

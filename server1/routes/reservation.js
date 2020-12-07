@@ -7,7 +7,6 @@ const mysql = require('mysql');
 const cors = require('cors');
 const { request } = require('express');
 const { compare } = require('bcrypt');
-const { map } = require('../app');
 
 
 let router = express.Router();
