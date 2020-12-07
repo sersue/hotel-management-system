@@ -18,9 +18,9 @@ import SelectRoom from './SelectRoomform';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      {'디비디바비디부 © '}
+      <Link color="inherit" href='/'>
+        Del luna
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

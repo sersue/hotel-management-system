@@ -63,6 +63,7 @@ const tiers = [
       "-싱글배드 : 1개",
       "-면적 : 16 (m2)",
     ],
+    isbackgroundColor: '#ff7f00',
     link: <SingleRoom></SingleRoom>
   },
   {
@@ -74,6 +75,7 @@ const tiers = [
       '-더블배드 : 1개',
       '-면적 : 18 (m2)',
     ],
+    isbackgroundColor: '#cbff00',
     link: <DoubleRoom></DoubleRoom>
   },
   {
@@ -86,6 +88,7 @@ const tiers = [
 
 
     ],
+    isbackgroundColor: '#4a763a',
     link: <OndolRoom></OndolRoom>
   },
   {
@@ -98,6 +101,7 @@ const tiers = [
 
 
     ],
+    isbackgroundColor: '#70a3b9',
     link: <TripleRoom></TripleRoom>
   },
   {
@@ -108,6 +112,7 @@ const tiers = [
       '-더블배드 : 2개',
       '-면적 : 28 (m2)',
     ],
+    isbackgroundColor: '#dcb8d8',
     link: <DeruxRoom></DeruxRoom>
   },
   {
@@ -118,6 +123,7 @@ const tiers = [
       '-더블배드 : 2개',
       '-면적 : 40 (m2)',
     ],
+    isbackgroundColor: '#bbb276',
     link: <SweetRoom></SweetRoom>
   },
   {
@@ -128,6 +134,7 @@ const tiers = [
       '-싱글배드 : 2개',
       '-면적 : 26 (m2)',
     ],
+    isbackgroundColor: '#00ff68',
     link: <TwinRoom></TwinRoom>
   },
 ];

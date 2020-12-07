@@ -77,7 +77,7 @@ router
         const Zip = req.body.Zip; //우편번호
         const Apt_Num = req.body.Apt_Num; //상세주소
         const Fax = req.body.Fax;//팩스번호
-        const Rank = 'red';
+        const Rank = 'BRONZE';
         const Validity_Month = 3;
         const Mileage = 1;
         const Reg_Date = getFormatDate(date);

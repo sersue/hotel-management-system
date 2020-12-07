@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     }, buttongrid: {
         padding: theme.spacing(1, 0.5, 1),
     }, button4: {
-        backgroundColor: 'green',
+        backgroundColor: '#70a3b9',
         padding: ".285rem .815rem",
         border: "1px solid teal",
         borderRadius: ".25rem",
@@ -37,22 +37,60 @@ const useStyles = makeStyles((theme) => ({
         lineHeight: 1.5,
 
     }, button2: {
-        backgroundColor: 'red',
+        backgroundColor: '#00ff68',
         padding: ".285rem .815rem",
         border: "1px solid teal",
         borderRadius: ".25rem",
         fontSize: "1rem",
         lineHeight: 1.5,
-    }, button1: {
-        backgroundColor: 'blue',
+    },
+    button1: {
+        backgroundColor: '#ff7f00',
         padding: ".285rem .815rem",
         border: "1px solid teal",
         borderRadius: ".25rem",
         fontSize: "1rem",
         lineHeight: 1.5,
+
     }, gridbox: {
         border: '2px solid #d3d3d3',
         borderRadius: '5px',
+    },
+    button3: {
+        backgroundColor: '#cbff00',
+        padding: ".285rem .815rem",
+        border: "1px solid teal",
+        borderRadius: ".25rem",
+        fontSize: "1rem",
+        lineHeight: 1.5,
+
+    },
+    button5: {
+        backgroundColor: '#dcb8d8',
+        padding: ".285rem .815rem",
+        border: "1px solid teal",
+        borderRadius: ".25rem",
+        fontSize: "1rem",
+        lineHeight: 1.5,
+
+    },
+    button6: {
+        backgroundColor: '#4a763a',
+        padding: ".285rem .815rem",
+        border: "1px solid teal",
+        borderRadius: ".25rem",
+        fontSize: "1rem",
+        lineHeight: 1.5,
+
+    },
+    button7: {
+        backgroundColor: '#bbb276',
+        padding: ".285rem .815rem",
+        border: "1px solid teal",
+        borderRadius: ".25rem",
+        fontSize: "1rem",
+        lineHeight: 1.5,
+
     },
 
 }));
@@ -100,7 +138,28 @@ export default function Selectroom({ Getroomnuber, CheckIn, CheckOut }) {
                     if (tier.res) {
                         return (
                             <Grid className={classes.buttongrid}>
-                                <button className={classes.button2} disabled onClick={() => selectroombutton(tier.title)}>
+                                <button className={classes.button1} disabled>
+                                    {tier.title}
+                                </button>
+                            </Grid>
+                        )
+                        break;
+                    } else {
+                        return (
+                            <Grid className={classes.buttongrid} >
+                                <button className={classes.button1} onClick={() => selectroombutton(tier.title)}>
+                                    {tier.title}
+                                </button>
+                            </Grid>
+                        )
+                        break;
+                    }
+
+                case 'Twin':
+                    if (tier.res) {
+                        return (
+                            <Grid className={classes.buttongrid} >
+                                <button className={classes.button2} disabled>
                                     {tier.title}
                                 </button>
                             </Grid>
@@ -116,12 +175,31 @@ export default function Selectroom({ Getroomnuber, CheckIn, CheckOut }) {
                         )
                         break;
                     }
-
-                case 'Twin':
+                case 'Double':
                     if (tier.res) {
                         return (
                             <Grid className={classes.buttongrid} >
-                                <button className={classes.button4} disabled onClick={() => selectroombutton(tier.title)}>
+                                <button className={classes.button3} disabled>
+                                    {tier.title}
+                                </button>
+                            </Grid>
+                        )
+                        break;
+                    } else {
+                        return (
+                            <Grid className={classes.buttongrid} >
+                                <button className={classes.button3} onClick={() => selectroombutton(tier.title)}>
+                                    {tier.title}
+                                </button>
+                            </Grid>
+                        )
+                        break;
+                    }
+                case 'Triple':
+                    if (tier.res) {
+                        return (
+                            <Grid className={classes.buttongrid} >
+                                <button className={classes.button4} disabled>
                                     {tier.title}
                                 </button>
                             </Grid>
@@ -137,15 +215,67 @@ export default function Selectroom({ Getroomnuber, CheckIn, CheckOut }) {
                         )
                         break;
                     }
+                case 'Derux_Twin':
+                    if (tier.res) {
+                        return (
+                            <Grid className={classes.buttongrid} >
+                                <button className={classes.button5} disabled>
+                                    {tier.title}
+                                </button>
+                            </Grid>
+                        )
+                        break;
+                    } else {
+                        return (
+                            <Grid className={classes.buttongrid} >
+                                <button className={classes.button5} onClick={() => selectroombutton(tier.title)}>
+                                    {tier.title}
+                                </button>
+                            </Grid>
+                        )
+                        break;
+                    }
+                case 'Ondol':
+                    if (tier.res) {
+                        return (
+                            <Grid className={classes.buttongrid} >
+                                <button className={classes.button6} disabled >
+                                    {tier.title}
+                                </button>
+                            </Grid>
+                        )
+                        break;
+                    } else {
+                        return (
+                            <Grid className={classes.buttongrid} >
+                                <button className={classes.button6} onClick={() => selectroombutton(tier.title)}>
+                                    {tier.title}
+                                </button>
+                            </Grid>
+                        )
+                        break;
+                    }
+                case 'Sweet':
+                    if (tier.res) {
+                        return (
+                            <Grid className={classes.buttongrid} >
+                                <button className={classes.button7} disabled>
+                                    {tier.title}
+                                </button>
+                            </Grid>
+                        )
+                        break;
+                    } else {
+                        return (
+                            <Grid className={classes.buttongrid} >
+                                <button className={classes.button7} onClick={() => selectroombutton(tier.title)}>
+                                    {tier.title}
+                                </button>
+                            </Grid>
+                        )
+                        break;
+                    }
 
-                default:
-                    return (
-                        <Grid className={classes.buttongrid} >
-                            <button className={classes.button4} onClick={() => selectroombutton(tier.title)}>
-                                {tier.title}
-                            </button>
-                        </Grid>
-                    )
 
             }
         }
